@@ -2,7 +2,7 @@
 from world import *
 from coordinates import *
 from generator import *
-from ..utils.get_visible_assets import *
+from ..utils.get_visible_assets import get_visible_assets
 
 
 def render(world: World, coordinates: Coordinates, fenetre):
