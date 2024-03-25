@@ -10,7 +10,8 @@ def create_screen():
     while Running:
         pygame.event.get()
         pygame.display.update()
-        pygame.display.quit()
+        if Running == False:
+            pygame.display.quit()
     return screen
 
 create_screen()
