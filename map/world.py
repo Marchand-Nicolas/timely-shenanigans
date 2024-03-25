@@ -1,3 +1,4 @@
+# Nico
 class World(object):
     def __init__(self, width, height, assets, spawn_points):
         self.width = width

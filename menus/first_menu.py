@@ -1,5 +1,7 @@
+# quentin
 import pygame
 
 
 def show_first_menu(screen):
-    play_boton = pygame.draw.rect(screen.get_height() // 2, (255, 45, 0), 50, 100)
+    rect = pygame.Rect(screen.get_width(), screen.get_height(), 50, 100)
+    play_button = pygame.draw.rect(screen, (255, 45, 0), rect)

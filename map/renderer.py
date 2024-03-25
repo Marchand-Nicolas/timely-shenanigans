@@ -1,5 +1,8 @@
+# Nico
 from world import *
 from coordinates import *
+from generator import *
+from ..utils.get_visible_assets import *
 
 
 def render(world: World, coordinates: Coordinates, fenetre):
@@ -9,4 +12,3 @@ def render(world: World, coordinates: Coordinates, fenetre):
     """
     # Remplir l'arrière plan en vert
     fenetre.fill((0, 255, 0))
-    # Récupérer

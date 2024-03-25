@@ -1,3 +1,4 @@
+# crée par Elliot
 from math import sqrt
 import asset
 
