@@ -1,9 +1,9 @@
 # Nico
-from world import *
-from coordinates import *
-from generator import *
-from ..utils.get_visible_assets import *
-from ..utils.create_screen import *
+from src.map.world import *
+from src.map.coordinates import *
+from src.map.generator import *
+from src.utils.get_visible_assets import *
+from src.utils.create_screen import *
 
 
 def render(world: World, coordinates: Coordinates, fenetre):
@@ -13,5 +13,5 @@ def render(world: World, coordinates: Coordinates, fenetre):
     """
     # Remplir l'arrière plan en vert
     fenetre = create_screen()
-    
+
     fenetre.fill((0, 255, 0))

@@ -1,5 +1,5 @@
 # Crée par Elliot
-from coordinates import *
+from src.map.coordinates import *
 
 
 class Asset:

@@ -8,5 +8,7 @@ def create_screen():
         (1000, 500)  # pygame.FULLSCREEN
     )  # Création d'une fenêtre graphique de taille 600x600 pixels
 
+    return screen
+
 
 create_screen()

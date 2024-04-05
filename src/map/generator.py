@@ -1,6 +1,6 @@
 # crée par Elliot
 from math import sqrt
-import asset
+from src.map.asset import Asset
 
 
 def generate_map(seed: int, width: int, height: int, player_amount=2):
@@ -15,12 +15,10 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
         for y in range(height, 5):
             if sqrt(seed) % x == 0:
                 # condition dépendant de la graine pour générer un arbre ou non
-                assets.append(asset.Asset((x, y), "alien.png", None))
+                assets.append(Asset((x, y), "alien.png", None))
             elif (seed(2) * 1000) % y == 0:  # pareil pour l'herbe
-                assets.append(asset.Asset((x, y), "vaisseau.png", None))
+                assets.append(Asset((x, y), "vaisseau.png", None))
     # Génération des bases des joueurs en fonction de la taille de la map
-    assets.append(asset.Asset((width // 10, height // 2), "base_rouge.png", None))
-    assets.append(
-        asset.Asset((width - (width // 10), height // 2), "base_rouge.png", None)
-    )
+    assets.append(Asset((width // 10, height // 2), "base_rouge.png", None))
+    assets.append(Asset((width - (width // 10), height // 2), "base_rouge.png", None))
     return assets
