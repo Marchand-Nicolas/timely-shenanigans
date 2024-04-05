@@ -8,7 +8,7 @@ class Asset:
         self.image = image
         self.hitbox = hitbox
 
-    def get_coordinates(self):
+    def get_position(self):
         return self.coordinates
 
     def get_image(self):

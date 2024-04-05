@@ -5,3 +5,6 @@ class World(object):
         self.height = height
         self.assets = assets
         self.spawn_points = spawn_points
+
+    def get_assets(self):
+        return self.assets
