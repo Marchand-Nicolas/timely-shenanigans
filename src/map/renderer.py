@@ -3,6 +3,7 @@ from world import *
 from coordinates import *
 from generator import *
 from ..utils.get_visible_assets import *
+from ..utils.create_screen import *
 
 
 def render(world: World, coordinates: Coordinates, fenetre):
@@ -11,4 +12,6 @@ def render(world: World, coordinates: Coordinates, fenetre):
     -> On déplace le monde sur la fenêtre en fonction des coordonnées.
     """
     # Remplir l'arrière plan en vert
+    fenetre = create_screen()
+    
     fenetre.fill((0, 255, 0))
