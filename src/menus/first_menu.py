@@ -8,3 +8,4 @@ def show_first_menu(screen):
     while run:    
         pygame.draw.rect(screen, (255, 0, 0), rect)        
         pygame.display.flip()
+        
