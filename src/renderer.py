@@ -30,21 +30,8 @@ def render(world: World, coordinates: Coordinates, screen: Screen):
         # On charge l'image
         image = pygame.image.load(image_path)
 
-        # Dimensions de l'image
-        image_width, image_height = image.get_rect().size
-
-        # On récupère les dimensions de l'écran
-        screen_width, screen_height = screen.get_dimensions()
-
-        image.length = asset.get_length()
-        image.width = (asset.get_length() * image.width) / image.length
-
-
-        x_on_screen = x - coordinates.get_x() + screen_width // 2 - image_width // 2
-        y_on_screen = y - coordinates.get_y() + screen_height // 2 - image_height // 2
-
         # On affiche l'image sur la fenêtre
-        pygame_screen.blit(image, (x_on_screen, y_on_screen))
+        pygame_screen.blit(image, (x - coordinates.get_x(), y - coordinates.get_y()))
 
     # Actualiser l'affichage
     pygame.display.flip()
