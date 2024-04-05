@@ -10,8 +10,6 @@ generated_assets = generate_map(123456789, 2000, 2000, 2)
 
 world = World(2000, 2000, generated_assets, [(1000, 1000)])
 
-print(world)
-
 player_coordinates = Coordinates(200, 1000)
 
 render(world, player_coordinates, screen)

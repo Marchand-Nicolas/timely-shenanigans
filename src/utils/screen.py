@@ -11,5 +11,8 @@ class Screen:
     def get_height(self):  # Elliot
         return self.height
 
-    def get_pygame_screen(self):
+    def get_dimensions(self):  # Nico
+        return self.width, self.height
+
+    def get_pygame_screen(self):  # Nico
         return self.pygame_screen
