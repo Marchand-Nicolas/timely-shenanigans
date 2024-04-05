@@ -10,7 +10,7 @@ def get_visible_assets(coordinates: Coordinates, assets: list, screen: Screen):
         if coordinates.get_x() - (screen.get_width() // 2) < x < coordinates.get_x() + (
             screen.get_width() // 2
         ) and coordinates.get_y() - (
-            screen.get_heigth() // 2
+            screen.get_height() // 2
         ) < y < coordinates.get_y() + (
             screen.get_height() // 2
         ):

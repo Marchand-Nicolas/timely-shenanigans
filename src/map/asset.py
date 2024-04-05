@@ -16,3 +16,8 @@ class Asset:
 
     def get_hitbox(self):
         return self.hitbox
+
+    # Nico
+    # Str method to print the asset
+    def __str__(self):
+        return f"Asset at {self.coordinates} with image {self.image} and hitbox {self.hitbox}"
