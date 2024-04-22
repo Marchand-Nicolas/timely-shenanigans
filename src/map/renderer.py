@@ -35,9 +35,7 @@ def render(world: World, coordinates: Coordinates, screen: Screen):
 
         # On récupère les dimensions de l'écran
         screen_width, screen_height = screen.get_dimensions()
-
-        image.length = asset.get_length()
-        image.width = (asset.get_length() * image.width) / image.length
+        image = pygame.transform.scale(image, (asset.get_width(), (asset.get_width() * int(image.get_height())) / image.get_width()))
 
 
         x_on_screen = x - coordinates.get_x() + screen_width // 2 - image_width // 2

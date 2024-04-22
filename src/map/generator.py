@@ -25,5 +25,3 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
     )
     # print([str(asset) for asset in assets])
     return assets
-
-generate_map(3648561837, 2000, 2000)
