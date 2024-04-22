@@ -3,10 +3,11 @@ from src.map.coordinates import *
 
 
 class Asset:
-    def __init__(self, coordinates: Coordinates, image: str, hitbox, length: int):
+    def __init__(self, coordinates: Coordinates, image: str, hitbox, size: int):
         self.coordinates = coordinates
         self.image = image
         self.hitbox = hitbox
+        self.size = size
 
     def get_position(self):
         return self.coordinates
@@ -16,7 +17,7 @@ class Asset:
 
     def get_hitbox(self):
         return self.hitbox
-    
+
     def get_length(self):
         return self.get_length
 
