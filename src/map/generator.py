@@ -19,9 +19,9 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
             elif (seed - (x*y)) % 24 == 0:  # pareil pour l'herbe
                 assets.append(Asset((x, y), "src/assets/vaisseau.png", None, 50))
     # Génération des bases des joueurs en fonction de la taille de la map
-    assets.append(Asset((width // 10, height // 2), "src/assets/base_rouge.png", None, 50))
+    assets.append(Asset((width // 10, height // 2), "src/assets/base.jpg", None, 50))
     assets.append(
-        Asset((width - (width // 10), height // 2), "src/assets/base_rouge.png", None, 50)
+        Asset((width - (width // 10), height // 2), "src/assets/base.jpg", None, 50)
     )
     # print([str(asset) for asset in assets])
     return assets
