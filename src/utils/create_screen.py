@@ -13,6 +13,3 @@ def create_screen(width=1000, height=500):
 
     screen = Screen(width, height, pygame_screen)
     return screen
-
-
-create_screen()
