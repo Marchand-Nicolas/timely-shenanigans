@@ -15,13 +15,13 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
         for y in range(0, height, 10):
             if ((seed) + (x*y)) % 14 == 0 and x % 6 == 0 and y % 4 == 0:
                 # condition dépendant de la graine pour générer un arbre ou non
-                assets.append(Asset((x, y), "src/assets/grass.png", None))
+                assets.append(Asset((x, y), "src/assets/grass.png", None, 50))
             elif (seed - (x*y)) % 24 == 0:  # pareil pour l'herbe
-                assets.append(Asset((x, y), "src/assets/vaisseau.png", None))
+                assets.append(Asset((x, y), "src/assets/vaisseau.png", None, 50))
     # Génération des bases des joueurs en fonction de la taille de la map
-    assets.append(Asset((width // 10, height // 2), "src/assets/base_rouge.png", None))
+    assets.append(Asset((width // 10, height // 2), "src/assets/base_rouge.png", None, 50))
     assets.append(
-        Asset((width - (width // 10), height // 2), "src/assets/base_rouge.png", None)
+        Asset((width - (width // 10), height // 2), "src/assets/base_rouge.png", None, 50)
     )
     # print([str(asset) for asset in assets])
     return assets
