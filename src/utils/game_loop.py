@@ -15,6 +15,7 @@ def game_loop(context=None):
                 context.get_on_event()(event)
             if event.type == pygame.QUIT:
                 run = False
+    
 
         if context.get_tick_event():
             # On appelle la fonction tick_event à chaque tour de boucle
