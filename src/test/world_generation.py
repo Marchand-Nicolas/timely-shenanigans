@@ -10,6 +10,8 @@ from src.utils.game_context import GameContext
 screen = create_screen()
 generated_assets = generate_map(1234567890, 2000, 2000, 2)
 
+# print(generated_assets  )
+
 world = World(500, 500, generated_assets, [(100, 100)])
 
 player_coordinates = Coordinates(200, 200)
@@ -18,6 +20,7 @@ right, left, up, down = (False, False, False, False)
 
 
 def refresh():
+    print("refresh")
     speed = 20
     global left, right, up, down
     player_coordinates.x += speed if right else 0
