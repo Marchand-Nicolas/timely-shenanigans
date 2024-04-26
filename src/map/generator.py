@@ -33,8 +33,6 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
             modificateur = table[0][assets[-1].get_image()]
             if valeur + modificateur >= 90:
                 assets.append(Asset((x, y), "src/assets/arbre.png", None, 80))
-    assets.append(Asset((width // 10, height // 2), "src/assets/base.png", None, 80))
-    assets.append(Asset((width - (width // 10), height // 2), "src/assets/base.png", None, 80))
     # Génération des bases des joueurs en fonction de la taille de la map
     # print([str(asset) for asset in assets])
     return assets
