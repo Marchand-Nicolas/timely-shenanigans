@@ -3,7 +3,7 @@ from math import cos, sin
 from src.map.asset import Asset
 
 table = [
-    { "src/assets/grass.png" : 15, "src/assets/fleur.jpg" : -9 , "src/assets/arbre.png" : 0},
+    { "src/assets/grass.png" : 15, "src/assets/fleur.jpg" : -9 , "src/assets/arbre.png" : -9},
     { "src/assets/grass.png" : -9, "src/assets/arbre.png" : 15, "src/assets/fleur.jpg" : 0},
     { "src/assets/arbre.png" : -9, "src/assets/fleur.jpg" : 15, "src/assets/grass.png" : 0}   
 ]
@@ -24,7 +24,7 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
             valeur = abs(cos(seed * x * y / 100)) * 100
             modificateur = table[2][assets[-1].get_image()]
             if valeur + modificateur >= 90:
-                assets.append(Asset((x, y), "src/assets/grass.png", None, 70))
+                assets.append(Asset((x, y), "src/assets/grass.png", None, 50))
                 continue
             modificateur = table[1][assets[-1].get_image()]
             if valeur + modificateur >= 90:
@@ -32,7 +32,7 @@ def generate_map(seed: int, width: int, height: int, player_amount=2):
                 continue
             modificateur = table[0][assets[-1].get_image()]
             if valeur + modificateur >= 90:
-                assets.append(Asset((x, y), "src/assets/arbre.png", None, 70))
+                assets.append(Asset((x, y), "src/assets/arbre.png", None, 80))
     # Génération des bases des joueurs en fonction de la taille de la map
     # print([str(asset) for asset in assets])
     return assets
