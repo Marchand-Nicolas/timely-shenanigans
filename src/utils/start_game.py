@@ -51,7 +51,16 @@ def start_game(seed, code=None, player_id=0):
         player_coordinates.x -= speed if left else 0
         player_coordinates.y -= speed if up else 0
         player_coordinates.y += speed if down else 0
-        render(world, player_coordinates, screen)
+        players_copy = players.copy()
+        players_copy.append(
+            {
+                "name": "",
+                "id": player_id,
+                "x": player_coordinates.get_x(),
+                "y": player_coordinates.get_y(),
+            }
+        )
+        render(world, player_coordinates, screen, players_copy)
         last_time = current_time
 
     def process_event(event):
