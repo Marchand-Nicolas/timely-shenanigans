@@ -17,7 +17,9 @@ import time
 def start_game(seed, code=None, player_id=0):
     screen = create_screen()
 
-    generated_assets = generate_map(seed, 2000, 2000, 2)
+    map_x = 2000
+    map_y = 2000
+    generated_assets = generate_map(seed, map_x, map_y)
 
     world = World(500, 500, generated_assets, [(100, 100)])
 
@@ -47,10 +49,14 @@ def start_game(seed, code=None, player_id=0):
         current_time = time.time()
         delta = current_time - last_time
         speed = 200 * delta
-        player_coordinates.x += speed if right else 0
-        player_coordinates.x -= speed if left else 0
-        player_coordinates.y -= speed if up else 0
-        player_coordinates.y += speed if down else 0
+
+        ()
+
+        player_coordinates.x += speed if right and player_coordinates.x <= map_x else 0
+        player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
+        player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
+        player_coordinates.y += speed if down and player_coordinates.y <= map_y else 0
+
         render(world, player_coordinates, screen)
         last_time = current_time
 

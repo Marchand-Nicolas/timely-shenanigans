@@ -8,6 +8,12 @@ class World(object):
 
     def get_assets(self):
         return self.assets
+    
+    def get_width(self):
+        return self.width
+    
+    def get_height(self):
+        return self.height
 
     # Str method to print the world
     def __str__(self):
