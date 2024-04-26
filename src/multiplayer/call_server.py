@@ -22,4 +22,4 @@ def call_server(route, data):
     if parsed_response["status"] == "error":
         print(parsed_response["message"])
         exit(1)
-    return json.loads(parsed_response)
+    return parsed_response

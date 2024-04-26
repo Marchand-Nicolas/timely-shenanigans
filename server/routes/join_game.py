@@ -20,5 +20,11 @@ def handle_join_game(body, games):
     if player_count == 1:
         game.state = "running"
     return json.dumps(
-        {"status": "ok", "game_id": game.id, "seed": game.seed, "player_id": player.id}
+        {
+            "status": "ok",
+            "game_id": game.id,
+            "seed": game.seed,
+            "player_id": player.id,
+            "code": game.code,
+        }
     )
