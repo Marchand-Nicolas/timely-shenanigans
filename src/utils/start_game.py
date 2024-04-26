@@ -6,9 +6,9 @@ from src.utils.game_loop import game_loop
 from src.map.world import World
 from src.map.coordinates import Coordinates
 from src.utils.game_context import GameContext
+import time
 
-# Nico
-
+# Nico, Elliot
 
 def start_game(seed, code=None):
     screen = create_screen()
@@ -21,13 +21,19 @@ def start_game(seed, code=None):
 
     right, left, up, down = (False, False, False, False)
 
+    last_time = 0
+
     def refresh():
-        speed = 20
+        nonlocal last_time
+        current_time = time.time()
+        delta = current_time - last_time
+        speed = 200 * delta
         player_coordinates.x += speed if right else 0
         player_coordinates.x -= speed if left else 0
         player_coordinates.y -= speed if up else 0
         player_coordinates.y += speed if down else 0
         render(world, player_coordinates, screen)
+        last_time = current_time
 
     def process_event(event):
         nonlocal right, left, up, down
