@@ -66,8 +66,8 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
                     - joueur_height
                 )
                 if (
-                    y_on_screen + image_height >= y_player_on_screen
-                    or coordinates.get_y() >= world.get_height()
+                    y_on_screen + image_height >= y_player_on_screen + joueur_height
+                     or coordinates.get_y() >= world.get_height() * 4
                 ):
                     joueur = pygame.image.load("src/assets/vaisseau.png")
                     joueur = pygame.transform.scale(
