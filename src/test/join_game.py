@@ -11,5 +11,6 @@ res = join_game("Pomme", code)
 if res:
     seed = res["seed"]
     code = res["code"]
-    print(f"Game joined with seed {seed} and code {code}")
-    start_game(seed)
+    player_id = res["player_id"]
+    print(f"Game joined with seed {seed} and code {code} and player_id {player_id}")
+    start_game(seed, code, player_id)

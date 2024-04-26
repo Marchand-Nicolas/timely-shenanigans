@@ -10,4 +10,4 @@ if res:
     seed = res["seed"]
     code = res["code"]
     print(f"Game created with seed {seed} and code {code}")
-    start_game(seed)
+    start_game(seed, code, 0)

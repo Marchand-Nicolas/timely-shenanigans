@@ -6,11 +6,15 @@ from src.utils.game_loop import game_loop
 from src.map.world import World
 from src.map.coordinates import Coordinates
 from src.utils.game_context import GameContext
+from src.utils.game_loop import game_loop
+from src.multiplayer.server_loop import server_loop
+import threading
 import time
 
 # Nico, Elliot
 
-def start_game(seed, code=None):
+
+def start_game(seed, code=None, player_id=0):
     screen = create_screen()
 
     generated_assets = generate_map(seed, 2000, 2000, 2)
@@ -22,6 +26,21 @@ def start_game(seed, code=None):
     right, left, up, down = (False, False, False, False)
 
     last_time = 0
+
+    players = []
+
+    stop_threads = False
+
+    get_exit_app = lambda: stop_threads
+
+    # On créé un thread pour le serveur, car les appels réseau bloqueraient le jeu
+    # autrement.
+    if code:
+        threading.Thread(
+            target=lambda: server_loop(
+                code, players, player_id, get_exit_app, player_coordinates
+            )
+        ).start()
 
     def refresh():
         nonlocal last_time
@@ -56,6 +75,10 @@ def start_game(seed, code=None):
             if event.key == pygame.K_DOWN:
                 down = False
 
-    context = GameContext(refresh, process_event)
+    def on_exit():
+        nonlocal stop_threads
+        stop_threads = True
+
+    context = GameContext(refresh, process_event, on_exit)
 
     game_loop(context)
