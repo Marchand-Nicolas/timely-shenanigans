@@ -7,7 +7,13 @@ from src.utils.create_screen import *
 from src.utils.screen import *
 
 
-def render(world: World, coordinates: Coordinates, screen: Screen, players: list):
+def render(
+    world: World,
+    coordinates: Coordinates,
+    screen: Screen,
+    players: list,
+    code: str = None,
+):
     """
     Affiche le monde sur la fenêtre.
     -> On déplace le monde sur la fenêtre en fonction des coordonnées.
@@ -21,18 +27,19 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
     visible_assets = get_visible_assets(coordinates, world.get_assets(), screen)
     joueur_affiches = [False for _ in players]
     # On parcourt les assets visibles
-    for asset in visible_assets:
+    asset_amount = len(visible_assets)
+    for asset_index in range(asset_amount):
+        asset = visible_assets[asset_index]
         # On récupère la position de l'asset
         x, y = asset.get_position()
 
-        # On récupère le chemin de l'image de l'asset
-        image_path = asset.get_image()
-
-        # On charge l'image
-        image = pygame.image.load(image_path)
+        # On récupère l'image de l'asset
+        image_object = asset.get_image()
 
         # Dimensions de l'image
-        image_width, image_height = image.get_rect().size
+        image_width, image_height = image_object.get_width(), image_object.get_height()
+
+        image = image_object.get_loaded_image()
 
         # On récupère les dimensions de l'écran
         screen_width, screen_height = screen.get_dimensions()
@@ -52,8 +59,8 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
             joueur_affiche = joueur_affiches[i]
             player = players[i]
             if not joueur_affiche:
-                joueur_width = 100
-                joueur_height = 100
+                joueur_width = 70
+                joueur_height = 70
                 x_player_on_screen = (
                     player["x"]
                     - coordinates.get_x()
@@ -68,9 +75,9 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
                 )
                 if (
                     y_on_screen + image_height >= y_player_on_screen + joueur_height
-                    or coordinates.get_y() >= world.get_height() * 4
+                    or asset_index == asset_amount - 1
                 ):
-                    joueur = pygame.image.load("src/assets/vaisseau.png")
+                    joueur = pygame.image.load("src/assets/player.png")
                     username = arial24.render(
                         player["name"], True, pygame.Color(255, 255, 255)
                     )
@@ -88,12 +95,16 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
                     if player["rotation"] == "left":
                         joueur = pygame.transform.flip(joueur, True, False)
 
-
                     pygame_screen.blit(joueur, (x_player_on_screen, y_player_on_screen))
                     joueur_affiches[i] = True
 
         # On affiche l'image sur la fenêtre
         pygame_screen.blit(image, (x_on_screen, y_on_screen))
+
+        # On affiche le code s'il est présent
+        if code:
+            code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
+            pygame_screen.blit(code_render, (10, 10))
 
     # Actualiser l'affichage
     pygame.display.flip()

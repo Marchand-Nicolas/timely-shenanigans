@@ -1,5 +1,5 @@
 from src.utils.start_game import start_game
-from src.utils.create_game import create_game as create
+from src.multiplayer.create_game import create_game as create
 
 
 # Nico

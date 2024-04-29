@@ -8,6 +8,8 @@ from src.map.coordinates import Coordinates
 from src.utils.game_context import GameContext
 from src.utils.game_loop import game_loop
 from src.multiplayer.server_loop import server_loop
+from src.utils.constants import world_width, world_height
+from src.utils.load_images import load_images
 import threading
 import time
 
@@ -19,13 +21,13 @@ players_server = []
 def start_game(seed, code=None, player_id=0):
     screen = create_screen()
 
-    map_x = 2000
-    map_y = 2000
-    generated_assets = generate_map(seed, map_x, map_y)
+    loaded_images = load_images()
 
-    world = World(500, 500, generated_assets, [(100, 100)])
+    generated_assets = generate_map(seed, world_width, world_height, loaded_images)
 
-    player_coordinates = Coordinates(200, 200)
+    world = World(world_width, world_height, generated_assets, [(100, 100)])
+
+    player_coordinates = Coordinates(world_width // 2, world_height // 2)
 
     right, left, up, down = (False, False, False, False)
 
@@ -34,8 +36,6 @@ def start_game(seed, code=None, player_id=0):
     stop_threads = False
 
     get_exit_app = lambda: stop_threads
-
-
 
     # On créé un thread pour le serveur, car les appels réseau bloqueraient le jeu
     # autrement.
@@ -68,7 +68,9 @@ def start_game(seed, code=None, player_id=0):
             x_distance = min(speed, abs(client_player["x"] - server_player["x"]))
             y_distance = min(speed, abs(client_player["y"] - server_player["y"]))
             if client_player["x"] != server_player["x"]:
-                client_player["rotation"] = "right" if client_player["x"] < server_player["x"] else "left"
+                client_player["rotation"] = (
+                    "right" if client_player["x"] < server_player["x"] else "left"
+                )
             client_player["x"] += (
                 x_distance if client_player["x"] < server_player["x"] else -x_distance
             )
@@ -85,14 +87,18 @@ def start_game(seed, code=None, player_id=0):
         delta = current_time - last_time
         speed = 200 * delta
 
-        player_coordinates.x += speed if right and player_coordinates.x <= map_x else 0
+        player_coordinates.x += (
+            speed if right and player_coordinates.x <= world_height else 0
+        )
         if right:
             player_rotation = "right"
         elif left:
             player_rotation = "left"
         player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
         player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
-        player_coordinates.y += speed if down and player_coordinates.y <= map_y else 0
+        player_coordinates.y += (
+            speed if down and player_coordinates.y <= world_height else 0
+        )
 
         sync_players(speed)
         players_copy = players_client.copy()
@@ -102,11 +108,11 @@ def start_game(seed, code=None, player_id=0):
                 "id": player_id,
                 "x": player_coordinates.get_x(),
                 "y": player_coordinates.get_y(),
-                "rotation": player_rotation
+                "rotation": player_rotation,
             }
         )
 
-        render(world, player_coordinates, screen, players_copy)
+        render(world, player_coordinates, screen, players_copy, code)
         last_time = current_time
 
     def process_event(event):

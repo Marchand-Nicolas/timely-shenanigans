@@ -1,3 +1,6 @@
+# Nico
+
+
 class Coordinates:
     def __init__(self, x, y):
         self.x = x
@@ -8,3 +11,7 @@ class Coordinates:
 
     def get_y(self):
         return self.y
+
+    # Unpack coordinates
+    def __iter__(self):
+        return iter((self.x, self.y))
