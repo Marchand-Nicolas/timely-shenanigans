@@ -24,6 +24,6 @@ def server_loop(code, players, player_id, get_exit_app, player_coordinates):
         players.clear()
         for player in response["players"]:
             players.append(player)
-        time.sleep(0.3)
+        time.sleep(0.1)
         if get_exit_app():
             break
