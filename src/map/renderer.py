@@ -12,6 +12,7 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
     Affiche le monde sur la fenêtre.
     -> On déplace le monde sur la fenêtre en fonction des coordonnées.
     """
+    arial24 = pygame.font.SysFont("arial", 24)
     pygame_screen = screen.get_pygame_screen()
     # Remplir l'arrière plan en vert
     pygame_screen.fill((63, 140, 75))
@@ -67,12 +68,23 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
                 )
                 if (
                     y_on_screen + image_height >= y_player_on_screen + joueur_height
-                     or coordinates.get_y() >= world.get_height() * 4
+                    or coordinates.get_y() >= world.get_height() * 4
                 ):
                     joueur = pygame.image.load("src/assets/vaisseau.png")
+                    username = arial24.render(
+                        player["name"], True, pygame.Color(255, 255, 255)
+                    )
+                    pygame_screen.blit(
+                        username,
+                        (
+                            x_player_on_screen + joueur_width // 2 - 50,
+                            y_player_on_screen - 50,
+                        ),
+                    )
                     joueur = pygame.transform.scale(
                         joueur, (joueur_width, joueur_height)
                     )
+
                     pygame_screen.blit(joueur, (x_player_on_screen, y_player_on_screen))
                     joueur_affiches[i] = True
 
