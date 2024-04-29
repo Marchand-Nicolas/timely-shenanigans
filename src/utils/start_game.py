@@ -67,7 +67,8 @@ def start_game(seed, code=None, player_id=0):
                 continue
             x_distance = min(speed, abs(client_player["x"] - server_player["x"]))
             y_distance = min(speed, abs(client_player["y"] - server_player["y"]))
-            client_player["rotation"] = "right" if client_player["x"] < server_player["x"] else "left"
+            if client_player["x"] != server_player["x"]:
+                client_player["rotation"] = "right" if client_player["x"] < server_player["x"] else "left"
             client_player["x"] += (
                 x_distance if client_player["x"] < server_player["x"] else -x_distance
             )
@@ -75,17 +76,21 @@ def start_game(seed, code=None, player_id=0):
                 y_distance if client_player["y"] < server_player["y"] else -y_distance
             )
 
+    player_rotation = "right"
+
     def refresh():
         nonlocal last_time
+        nonlocal player_rotation
         current_time = time.time()
         delta = current_time - last_time
         speed = 200 * delta
-        global player_rotation
 
         player_coordinates.x += speed if right and player_coordinates.x <= map_x else 0
-        player_rotation = "right" if right and player_coordinates.x <= map_x else 0
+        if right:
+            player_rotation = "right"
+        elif left:
+            player_rotation = "left"
         player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
-        player_rotation = "left" if left and player_coordinates.x >= 0 else 0
         player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
         player_coordinates.y += speed if down and player_coordinates.y <= map_y else 0
 
