@@ -13,6 +13,8 @@ import time
 
 # Nico, Elliot
 
+players_server = []
+
 
 def start_game(seed, code=None, player_id=0):
     screen = create_screen()
@@ -29,8 +31,6 @@ def start_game(seed, code=None, player_id=0):
 
     last_time = 0
 
-    players = []
-
     stop_threads = False
 
     get_exit_app = lambda: stop_threads
@@ -40,9 +40,36 @@ def start_game(seed, code=None, player_id=0):
     if code:
         threading.Thread(
             target=lambda: server_loop(
-                code, players, player_id, get_exit_app, player_coordinates
+                code, players_server, player_id, get_exit_app, player_coordinates
             )
         ).start()
+
+    players_client = []
+
+    # On stocke les joueurs, avec leurs positions actuelles.
+    def sync_players(speed):
+        # On vérifie que tous les joueurs sont bien dans la liste.
+        for player in players_server:
+            if player["id"] not in [p["id"] for p in players_client]:
+                print("Loading player", player["id"])
+                players_client.append(player)
+        # On met à jour les positions des joueurs en fonction de la vitesse.
+        for client_player in players_client:
+            server_player = None
+            for p in players_server:
+                if p["id"] == client_player["id"]:
+                    server_player = p
+            if not server_player:
+                print("Player not found in server list, but present in client list.")
+                continue
+            x_distance = min(speed, abs(client_player["x"] - server_player["x"]))
+            y_distance = min(speed, abs(client_player["y"] - server_player["y"]))
+            client_player["x"] += (
+                x_distance if client_player["x"] < server_player["x"] else -x_distance
+            )
+            client_player["y"] += (
+                y_distance if client_player["y"] < server_player["y"] else -y_distance
+            )
 
     def refresh():
         nonlocal last_time
@@ -50,13 +77,13 @@ def start_game(seed, code=None, player_id=0):
         delta = current_time - last_time
         speed = 200 * delta
 
-        ()
-
         player_coordinates.x += speed if right and player_coordinates.x <= map_x else 0
         player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
         player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
         player_coordinates.y += speed if down and player_coordinates.y <= map_y else 0
-        players_copy = players.copy()
+
+        sync_players(speed)
+        players_copy = players_client.copy()
         players_copy.append(
             {
                 "name": "",
