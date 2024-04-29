@@ -1,12 +1,12 @@
-from src.multiplayer.join_game import join_game
 from src.utils.start_game import start_game
+from src.utils.create_game import create_game as create
 
 
 # Nico
 
 
 def create_game(username):
-    res = create_game(username)
+    res = create(username)
     if res:
         seed = res["seed"]
         code = res["code"]

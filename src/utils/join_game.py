@@ -1,4 +1,4 @@
-from src.multiplayer.join_game import join_game
+from src.multiplayer.join_game import join_game as join
 from src.utils.start_game import start_game
 
 
@@ -6,7 +6,7 @@ from src.utils.start_game import start_game
 
 
 def join_game(username, code):
-    res = join_game(username, code)
+    res = join(username, code)
     if res:
         seed = res["seed"]
         code = res["code"]
