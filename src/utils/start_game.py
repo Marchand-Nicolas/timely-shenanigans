@@ -126,7 +126,7 @@ def start_game(seed, code=None, player_id=0):
             }
         )
 
-        render(world, player_coordinates, screen, players_copy, code)
+        render(world, player_coordinates, screen, players_copy, loaded_images, code)
         last_time = current_time
 
     def process_event(event):

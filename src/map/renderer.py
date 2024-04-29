@@ -12,6 +12,7 @@ def render(
     coordinates: Coordinates,
     screen: Screen,
     players: list,
+    loaded_images: dict,
     code: str = None,
 ):
     """
@@ -78,7 +79,7 @@ def render(
                     y_on_screen + image_height >= y_player_on_screen + joueur_height
                     or asset_index == asset_amount - 1
                 ):
-                    joueur = pygame.image.load("src/assets/player.png")
+                    joueur = loaded_images["src/assets/player.png"].get_loaded_image()
                     username = arial24.render(
                         player["name"], True, pygame.Color(255, 255, 255)
                     )
