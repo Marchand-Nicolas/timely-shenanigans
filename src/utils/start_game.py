@@ -35,6 +35,8 @@ def start_game(seed, code=None, player_id=0):
 
     get_exit_app = lambda: stop_threads
 
+
+
     # On créé un thread pour le serveur, car les appels réseau bloqueraient le jeu
     # autrement.
     if code:
@@ -52,6 +54,7 @@ def start_game(seed, code=None, player_id=0):
         for player in players_server:
             if player["id"] not in [p["id"] for p in players_client]:
                 print("Loading player", player["id"])
+                player["rotation"] = "right"
                 players_client.append(player)
         # On met à jour les positions des joueurs en fonction de la vitesse.
         for client_player in players_client:
@@ -64,6 +67,7 @@ def start_game(seed, code=None, player_id=0):
                 continue
             x_distance = min(speed, abs(client_player["x"] - server_player["x"]))
             y_distance = min(speed, abs(client_player["y"] - server_player["y"]))
+            client_player["rotation"] = "right" if client_player["x"] < server_player["x"] else "left"
             client_player["x"] += (
                 x_distance if client_player["x"] < server_player["x"] else -x_distance
             )
@@ -76,9 +80,12 @@ def start_game(seed, code=None, player_id=0):
         current_time = time.time()
         delta = current_time - last_time
         speed = 200 * delta
+        global player_rotation
 
         player_coordinates.x += speed if right and player_coordinates.x <= map_x else 0
+        player_rotation = "right" if right and player_coordinates.x <= map_x else 0
         player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
+        player_rotation = "left" if left and player_coordinates.x >= 0 else 0
         player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
         player_coordinates.y += speed if down and player_coordinates.y <= map_y else 0
 
@@ -90,6 +97,7 @@ def start_game(seed, code=None, player_id=0):
                 "id": player_id,
                 "x": player_coordinates.get_x(),
                 "y": player_coordinates.get_y(),
+                "rotation": player_rotation
             }
         )
 

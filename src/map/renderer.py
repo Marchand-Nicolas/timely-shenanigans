@@ -73,6 +73,10 @@ def render(world: World, coordinates: Coordinates, screen: Screen, players: list
                     joueur = pygame.transform.scale(
                         joueur, (joueur_width, joueur_height)
                     )
+
+                    if player["rotation"] == "left":
+                        joueur = pygame.transform.flip(joueur, True, False)
+
                     pygame_screen.blit(joueur, (x_player_on_screen, y_player_on_screen))
                     joueur_affiches[i] = True
 
