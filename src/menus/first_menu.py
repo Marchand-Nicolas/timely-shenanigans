@@ -1,6 +1,8 @@
 # quentin
 import pygame
 from tkinter import messagebox
+from src.utils.create_game import create_game
+from src.utils.join_game import join_game
 
 pygame.init()
 
@@ -56,7 +58,7 @@ def enter_text(text_rect, screen, coordinates):
         pygame.display.flip()
 
 
-def menu_choose_game(screen):
+def menu_choose_game(screen, name):
     code = ""
     rect_creat_world = pygame.Rect(
         screen.get_width() // 2 - 150, screen.get_height() // 3 - 50, 300, 50
@@ -111,7 +113,11 @@ def menu_choose_game(screen):
                 pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
+                if rect_creat_world.collidepoint(x, y):
+                    create_game(name)
                 if rect_join_world.collidepoint(x, y):
+                    if code != '':
+                        join_game(name,code)
                     botton_join_clic = True
                 elif (
                     rect_enter_code_to_join.collidepoint(x, y)
@@ -183,5 +189,5 @@ def show_first_menu(screen):
                         )
                     else:
                         undisplay(screen)
-                        menu_choose_game(screen)
+                        menu_choose_game(screen, name)
                         running = False
