@@ -14,5 +14,9 @@ class Screen:
     def get_dimensions(self):  # Nico
         return self.width, self.height
 
+    def set_dimensions(self, width, height):  # Nico
+        self.width = width
+        self.height = height
+
     def get_pygame_screen(self):  # Nico
         return self.pygame_screen
