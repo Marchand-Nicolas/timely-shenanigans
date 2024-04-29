@@ -12,7 +12,7 @@ def get_visible_assets(coordinates: Coordinates, assets: list, screen: Screen):
         ) and coordinates.get_y() - (
             screen.get_height() // 2
         ) < y < coordinates.get_y() + (
-            screen.get_height() // 2
+            screen.get_height() // 2 + 100
         ):
             visible_assets.append(asset)
     return visible_assets
