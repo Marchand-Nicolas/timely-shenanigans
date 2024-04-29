@@ -19,6 +19,7 @@ def render(
     -> On déplace le monde sur la fenêtre en fonction des coordonnées.
     """
     arial24 = pygame.font.SysFont("arial", 24)
+    arial12 = pygame.font.SysFont("arial", 12)
     pygame_screen = screen.get_pygame_screen()
     # Remplir l'arrière plan en vert
     pygame_screen.fill((63, 140, 75))
@@ -105,6 +106,14 @@ def render(
         if code:
             code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
             pygame_screen.blit(code_render, (10, 10))
+
+        # On affiche les coordonnées du joueur x / y (arrondies)
+        coordinates_render = arial12.render(
+            f"{round(coordinates.get_x())} / {round(coordinates.get_y())}",
+            True,
+            pygame.Color(255, 255, 255),
+        )
+        pygame_screen.blit(coordinates_render, (10, 40))
 
     # Actualiser l'affichage
     pygame.display.flip()

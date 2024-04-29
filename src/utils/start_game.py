@@ -8,7 +8,7 @@ from src.map.coordinates import Coordinates
 from src.utils.game_context import GameContext
 from src.utils.game_loop import game_loop
 from src.multiplayer.server_loop import server_loop
-from src.utils.constants import world_width, world_height
+from src.utils.constants import world_width, world_height, speed
 from src.utils.load_images import load_images
 import threading
 import time
@@ -49,7 +49,7 @@ def start_game(seed, code=None, player_id=0):
     players_client = []
 
     # On stocke les joueurs, avec leurs positions actuelles.
-    def sync_players(speed):
+    def sync_players(distance):
         # On vérifie que tous les joueurs sont bien dans la liste.
         for player in players_server:
             if player["id"] not in [p["id"] for p in players_client]:
@@ -65,17 +65,31 @@ def start_game(seed, code=None, player_id=0):
             if not server_player:
                 print("Player not found in server list, but present in client list.")
                 continue
-            x_distance = min(speed, abs(client_player["x"] - server_player["x"]))
-            y_distance = min(speed, abs(client_player["y"] - server_player["y"]))
+            x_distance = abs(client_player["x"] - server_player["x"])
+            y_distance = abs(client_player["y"] - server_player["y"])
+            x_movement = min(distance, x_distance)
+            y_movement = min(distance, y_distance)
+            distance = (x_distance**2 + y_distance**2) ** 0.5
+            # Si la distance est plus grande que la distance parcourue en une seconde,
+            # on accélère le mouvement en fonction de la distance.
+            if distance > speed:
+                multiplier = distance / speed
+                if multiplier < 2:
+                    x_movement *= 1.5
+                    y_movement *= 1.5
+                else:
+                    # On téléporte le joueur si la distance est trop grande.
+                    client_player["x"] = server_player["x"]
+                    client_player["y"] = server_player["y"]
             if client_player["x"] != server_player["x"]:
                 client_player["rotation"] = (
                     "right" if client_player["x"] < server_player["x"] else "left"
                 )
             client_player["x"] += (
-                x_distance if client_player["x"] < server_player["x"] else -x_distance
+                x_movement if client_player["x"] < server_player["x"] else -x_movement
             )
             client_player["y"] += (
-                y_distance if client_player["y"] < server_player["y"] else -y_distance
+                y_movement if client_player["y"] < server_player["y"] else -y_movement
             )
 
     player_rotation = "right"
@@ -85,22 +99,22 @@ def start_game(seed, code=None, player_id=0):
         nonlocal player_rotation
         current_time = time.time()
         delta = current_time - last_time
-        speed = 200 * delta
+        distance = speed * delta
 
         player_coordinates.x += (
-            speed if right and player_coordinates.x <= world_height else 0
+            distance if right and player_coordinates.x <= world_height else 0
         )
         if right:
             player_rotation = "right"
         elif left:
             player_rotation = "left"
-        player_coordinates.x -= speed if left and player_coordinates.x >= 0 else 0
-        player_coordinates.y -= speed if up and player_coordinates.y >= 0 else 0
+        player_coordinates.x -= distance if left and player_coordinates.x >= 0 else 0
+        player_coordinates.y -= distance if up and player_coordinates.y >= 0 else 0
         player_coordinates.y += (
-            speed if down and player_coordinates.y <= world_height else 0
+            distance if down and player_coordinates.y <= world_height else 0
         )
 
-        sync_players(speed)
+        sync_players(distance)
         players_copy = players_client.copy()
         players_copy.append(
             {
