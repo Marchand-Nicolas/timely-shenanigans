@@ -12,5 +12,8 @@ class Game:
     def get_players(self):
         return self.players
 
+    def remove_player(self, player_id):
+        self.players = [player for player in self.players if player.id != player_id]
+
     def __str__(self):
         return f"Game {self.id} with {len(self.players)} players and code {self.code}"
