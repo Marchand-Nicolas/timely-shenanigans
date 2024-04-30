@@ -61,7 +61,7 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
     ]
     for y in range(10, width, 10):
         for x in range(10, height, 10):
-            if abs(sin(seed * (x + y))) * 100 > 8:
+            if abs(sin(seed * x - y)) * 100 > 8:
                 continue
             for i in range(3):
                 valeur = (
