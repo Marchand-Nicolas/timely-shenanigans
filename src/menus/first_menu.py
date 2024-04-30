@@ -44,7 +44,10 @@ def show_first_menu(screen):
         )
         pygame.display.update()
 
+    name = ""
+
     def process_event(event):
+        nonlocal name
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             if enter_name_rect.collidepoint(x, y) or text_enter_name_rect.collidepoint(

@@ -1,4 +1,4 @@
-#quentin
+# quentin
 import pygame
 from tkinter import messagebox
 from src.menus.enter_text import enter_text
@@ -68,7 +68,7 @@ def menu_choose_game(screen, name):
                     if code != "":
                         return join_game(name, screen, code)
                     else:
-                        messagebox.showinfo('code', 'il faut un code')
+                        messagebox.showinfo("code", "il faut un code")
                 elif (
                     rect_enter_code_to_join.collidepoint(x, y)
                     or rect_code.collidepoint(x, y)
@@ -81,4 +81,5 @@ def menu_choose_game(screen, name):
                     )
                     code = text[0]
                     if text[1] == True:
-                        return join_game(name,screen,code)
+                        running = False
+                        return join_game(name, screen, code)
