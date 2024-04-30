@@ -1,5 +1,4 @@
 # Nico, Elliot
-from src.map.world import *
 from src.map.coordinates import *
 from src.map.generator import *
 from src.utils.get_visible_assets import *
@@ -8,7 +7,7 @@ from src.utils.screen import *
 
 
 def render(
-    world: World,
+    visible_assets,
     coordinates: Coordinates,
     screen: Screen,
     players: list,
@@ -25,8 +24,6 @@ def render(
     # Remplir l'arrière plan en vert
     pygame_screen.fill((63, 140, 75))
 
-    # On récupère les assets visibles
-    visible_assets = get_visible_assets(coordinates, world.get_assets(), screen)
     joueur_affiches = [False for _ in players]
     # On parcourt les assets visibles
     asset_amount = len(visible_assets)

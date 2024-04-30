@@ -6,11 +6,17 @@ from .screen import Screen
 def get_visible_assets(coordinates: Coordinates, assets: list, screen: Screen):
     visible_assets = []
 
+    # Marge pour les assets, car cette fonction n'est pas appelée à chaque frame
+    margin_multiplier = 1.2
+
+    screen_width = screen.get_width() * margin_multiplier
+    screen_height = screen.get_height() * margin_multiplier
+
     # Précalcul
     screen_x = coordinates.get_x()
     screen_y = coordinates.get_y()
-    half_screen_width = screen.get_width() // 2
-    half_screen_height = screen.get_height() // 2
+    half_screen_width = screen_width // 2
+    half_screen_height = screen_height // 2
 
     screen_left = screen_x - half_screen_width
     screen_right = screen_x + half_screen_width

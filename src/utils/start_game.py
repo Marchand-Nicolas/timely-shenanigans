@@ -9,6 +9,7 @@ from src.utils.game_loop import game_loop
 from src.multiplayer.server_loop import server_loop
 from src.utils.constants import world_width, world_height, speed
 from src.utils.load_images import load_images
+from src.utils.get_visible_assets import get_visible_assets
 import threading
 import time
 
@@ -97,9 +98,14 @@ def start_game(seed, screen, code=None, player_id=0):
 
     player_rotation = "right"
 
+    visible_assets = []
+    time_since_last_asset_refresh = 0
+
     def refresh():
         nonlocal last_time
         nonlocal player_rotation
+        nonlocal time_since_last_asset_refresh
+        nonlocal visible_assets
         current_time = time.time()
         delta = current_time - last_time
         distance = speed * delta
@@ -129,8 +135,23 @@ def start_game(seed, screen, code=None, player_id=0):
             }
         )
 
-        render(world, player_coordinates, screen, players_copy, loaded_images, code)
+        # On récupère les assets visibles
+        if time_since_last_asset_refresh > 0.3:
+            visible_assets = get_visible_assets(
+                player_coordinates, world.get_assets(), screen
+            )
+            time_since_last_asset_refresh = 0
+
+        render(
+            visible_assets,
+            player_coordinates,
+            screen,
+            players_copy,
+            loaded_images,
+            code,
+        )
         last_time = current_time
+        time_since_last_asset_refresh += delta
 
     def process_event(event):
         nonlocal right, left, up, down
