@@ -30,7 +30,7 @@ def render(
     joueur_affiches = [False for _ in players]
     # On parcourt les assets visibles
     asset_amount = len(visible_assets)
-    print(asset_amount)
+
     for asset_index in range(asset_amount):
         asset = visible_assets[asset_index]
         # On récupère la position de l'asset
