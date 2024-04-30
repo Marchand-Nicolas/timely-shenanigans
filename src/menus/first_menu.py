@@ -35,7 +35,7 @@ def enter_text(text_rect, screen, coordinates):
                 pygame.quit()
             if event.type == pygame.KEYUP:
                 if event.key == 13:  # cas pour la touche entrer
-                    return text
+                    return (text, True)
                 elif event.key == 8 and text != "":  # cas pour le backspac
                     text = text[:-1]
                 elif (
@@ -51,7 +51,7 @@ def enter_text(text_rect, screen, coordinates):
                 if not text_rect.collidepoint(
                     x, y
                 ):  # si le joueur clique hors du rectengle d'entrer de texte
-                    return text
+                    return (text, False)
         pygame.draw.rect(screen.get_pygame_screen(), (255, 255, 255), text_rect)
         text_name = arial24.render(text, True, pygame.Color(0, 0, 0))
         screen.get_pygame_screen().blit(text_name, coordinates)
@@ -114,10 +114,10 @@ def menu_choose_game(screen, name):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 if rect_creat_world.collidepoint(x, y):
-                    create_game(name, screen)
+                    return create_game(name, screen)
                 if rect_join_world.collidepoint(x, y):
                     if code != "":
-                        join_game(name, screen, code)
+                        return join_game(name, screen, code)
                     botton_join_clic = True
                 elif (
                     rect_enter_code_to_join.collidepoint(x, y)
@@ -171,12 +171,18 @@ def show_first_menu(screen):
                 x, y = pygame.mouse.get_pos()
                 if enter_name_rect.collidepoint(
                     x, y
+                ) or text_enter_name_rect.collidepoint(
+                    x, y
                 ):  # detecte si la sourie est cliquer dans le rect d'entrer de nom
-                    name = enter_text(
+                    text = enter_text(
                         enter_name_rect,
                         screen,
                         (screen.get_width() // 2 - 150, screen.get_height() // 2 + 150),
                     )
+                    name = text[0]
+                    if text[1] == True:
+                        undisplay(screen)
+                        return menu_choose_game(screen, name)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 if play_buton.collidepoint(
