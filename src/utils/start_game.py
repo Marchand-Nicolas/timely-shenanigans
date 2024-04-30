@@ -54,6 +54,11 @@ def start_game(seed, screen, code=None, player_id=0):
                 print("Loading player", player["id"])
                 player["rotation"] = "right"
                 players_client.append(player)
+        # On supprime les joueurs qui ne sont plus dans la partie.
+        for player in players_client:
+            if player["id"] not in [p["id"] for p in players_server]:
+                print("Unloading player", player["id"])
+                players_client.remove(player)
         # On met à jour les positions des joueurs en fonction de la vitesse.
         for client_player in players_client:
             server_player = None

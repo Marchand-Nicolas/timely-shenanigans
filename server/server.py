@@ -34,3 +34,8 @@ while True:
     response = routes[route](body, games)
     client.sendall(response.encode())
     client.close()
+    for game in games:
+        players = game.get_players()
+        for player in players:
+            if player.is_disconnected():
+                game.remove_player(player.id)
