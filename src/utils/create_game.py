@@ -5,10 +5,10 @@ from src.multiplayer.create_game import create_game as create
 # Nico
 
 
-def create_game(username):
+def create_game(username, screen):
     res = create(username)
     if res:
         seed = res["seed"]
         code = res["code"]
         print(f"Game created with seed {seed} and code {code}")
-        start_game(seed, code, 0)
+        start_game(seed, screen, code, 0)

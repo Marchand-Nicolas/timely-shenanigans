@@ -117,10 +117,10 @@ def menu_choose_game(screen, name):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 if rect_creat_world.collidepoint(x, y):
-                    return create_game(name)
+                    return create_game(name, screen)
                 if rect_join_world.collidepoint(x, y):
-                    if code != '':
-                        return join_game(name,code)
+                    if code != "":
+                        return join_game(name, screen, code)
                     else:
                         messagebox.showinfo('code', 'il faut un code')
                 elif (
@@ -179,8 +179,8 @@ def show_first_menu(screen):
                 if enter_name_rect.collidepoint(
                     x, y
                 ) or text_enter_name_rect.collidepoint(
-                    x,y
-                    ):  # detecte si la sourie est cliquer dans le rect d'entrer de nom
+                    x, y
+                ):  # detecte si la sourie est cliquer dans le rect d'entrer de nom
                     text = enter_text(
                         enter_name_rect,
                         screen,
