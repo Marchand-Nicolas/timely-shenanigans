@@ -49,7 +49,6 @@ def enter_text(text_rect, screen, coordinates):
                 elif event.key == 32:  # cas pour les espaces
                     text += " "
                 else:
-                    print(event.key)
                     text += pygame.key.name(event.key)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
