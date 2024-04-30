@@ -9,7 +9,7 @@ table = [
         "src/assets/fleur.png": -9,
         "src/assets/arbre.png": -9,
     },
-    {"src/assets/grass.png": -9, "src/assets/arbre.png": 6, "src/assets/fleur.png": -7},
+    {"src/assets/grass.png": -9, "src/assets/arbre.png": 5, "src/assets/fleur.png": -9},
     {"src/assets/arbre.png": -9, "src/assets/fleur.png": 15, "src/assets/grass.png": 0},
 ]
 
