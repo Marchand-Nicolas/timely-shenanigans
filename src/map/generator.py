@@ -9,7 +9,7 @@ table = [
         "src/assets/fleur.png": -9,
         "src/assets/arbre.png": -9,
     },
-    {"src/assets/grass.png": -9, "src/assets/arbre.png": 15, "src/assets/fleur.png": 0},
+    {"src/assets/grass.png": -9, "src/assets/arbre.png": 8, "src/assets/fleur.png": -5},
     {"src/assets/arbre.png": -9, "src/assets/fleur.png": 15, "src/assets/grass.png": 0},
 ]
 
@@ -27,7 +27,7 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
     aux autres joueurs.
     Out: Liste d'assets
     """
-    assets = [
+    assets = [              # On crée un asset fixe pour lancer la génération des suivants
         Asset(
             Coordinates(0, 0),
             "src/assets/fleur.png",
