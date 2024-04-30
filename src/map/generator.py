@@ -9,22 +9,22 @@ table_gener = [
         "proba": 90,
         "src/assets/arbre.png": 5,
         "src/assets/fleur.png": -5,
-        "src/assets/grass.png": 0
+        "src/assets/grass.png": 0,
     },
     {
         "nom": "src/assets/arbre.png",
         "proba": 98,
         "src/assets/grass.png": 3,
         "src/assets/fleur.png": -5,
-        "src/assets/arbre.png": 3
+        "src/assets/arbre.png": 3,
     },
     {
         "nom": "src/assets/fleur.png",
         "proba": 97,
         "src/assets/grass.png": 2,
         "src/assets/arbre.png": -5,
-        "src/assets/fleur.png": -5
-    }
+        "src/assets/fleur.png": -5,
+    },
 ]
 
 """table = [
@@ -37,11 +37,7 @@ table_gener = [
     {, , "src/assets/grass.png": 0},
 ]"""
 
-image_paths = [
-    "src/assets/grass.png",
-    "src/assets/arbre.png",
-    "src/assets/fleur.png"
-]
+image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png"]
 
 
 def generate_map(seed: int, width: int, height: int, loaded_images: dict):
@@ -51,7 +47,7 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
     aux autres joueurs.
     Out: Liste d'assets
     """
-    assets = [              # On crée un asset fixe pour lancer la génération des suivants
+    assets = [  # On crée un asset fixe pour lancer la génération des suivants
         Asset(
             Coordinates(0, 0),
             "src/assets/fleur.png",
@@ -75,7 +71,6 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
                     asset = Asset(Coordinates(x, y), image_path, None, image)
                     assets.append(asset)
                     break
-    # Génération des bases des joueurs en fonction de la taille de la map
     # print([str(asset) for asset in assets])
     # Order assets by y + height
     assets.sort(

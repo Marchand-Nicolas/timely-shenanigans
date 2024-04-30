@@ -6,7 +6,7 @@ from .screen import Screen
 def get_visible_assets(coordinates: Coordinates, assets: list, screen: Screen):
     visible_assets = []
 
-    # Precompute screen boundaries
+    # Précalcul des coordonnées de l'écran
     screen_left = coordinates.get_x() - (screen.get_width() // 2)
     screen_right = coordinates.get_x() + (screen.get_width() // 2)
     screen_top = coordinates.get_y() - (screen.get_height() // 2)
@@ -29,4 +29,7 @@ def get_visible_assets(coordinates: Coordinates, assets: list, screen: Screen):
             and top_edge < screen_bottom
         ):
             visible_assets.append(asset)
+
+        if top_edge > screen_bottom:
+            break
     return visible_assets
