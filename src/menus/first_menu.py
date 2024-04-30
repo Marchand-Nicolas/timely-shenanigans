@@ -42,6 +42,10 @@ def enter_text(text_rect, screen, coordinates):
                     event.key == 8 and text == ""
                 ):  # cas pour le backspac quand il n'y a pas de psedo
                     pass
+                elif(
+                    (event.key > 122 or event.key < 97) and (event.key < 48 or event.key > 57)
+                ):
+                    pass
                 elif event.key == 32:  # cas pour les espaces
                     text += " "
                 else:
@@ -64,18 +68,17 @@ def menu_choose_game(screen, name):
         screen.get_width() // 2 - 150, screen.get_height() // 3 - 50, 300, 50
     )
     rect_join_world = pygame.Rect(
-        screen.get_width() // 2 - 150, screen.get_height() // 3 + 50, 300, 50
+        screen.get_width() // 3 + 350, screen.get_height() // 3 + 75, 50, 50
     )
     rect_enter_code_to_join = pygame.Rect(
-        screen.get_width() // 2 - 150, screen.get_height() // 3 + 125, 300, 50
+        screen.get_width() // 2 - 150, screen.get_height() // 3 + 50, 300, 50
     )
     rect_code = pygame.Rect(
-        screen.get_width() // 2 - 150, screen.get_height() // 3 + 175, 300, 50
+        screen.get_width() // 2 - 150, screen.get_height() // 3 + 100, 300, 50
     )
     text_creat_world = arial24.render("create a new game", True, pygame.Color(0, 0, 0))
-    text_join_world = arial24.render("join a game", True, pygame.Color(0, 0, 0))
+    text_join_world = arial24.render("join", True, pygame.Color(0, 0, 0))
     text_enter_code = arial24.render("enter a code:", True, pygame.Color(0, 0, 0))
-    botton_join_clic = False
     running = True
     while running:
         code_text = arial24.render(code, True, pygame.Color(0, 0, 0))
@@ -88,25 +91,24 @@ def menu_choose_game(screen, name):
         )
         screen.get_pygame_screen().blit(
             text_join_world,
-            (screen.get_width() // 2 - 150, screen.get_height() // 3 + 50),
+            (screen.get_width() // 3 + 350, screen.get_height() // 3 + 75),
         )
         screen.get_pygame_screen().blit(
             text_enter_code,
             (screen.get_width() // 2 - 150, screen.get_height() // 3 + 125),
         )
-        if botton_join_clic == True:
-            pygame.draw.rect(
-                screen.get_pygame_screen(), (255, 255, 255), rect_enter_code_to_join
-            )
-            pygame.draw.rect(screen.get_pygame_screen(), (255, 255, 255), rect_code)
-            screen.get_pygame_screen().blit(
-                text_enter_code,
-                (screen.get_width() // 2 - 150, screen.get_height() // 3 + 125),
-            )
-            screen.get_pygame_screen().blit(
-                code_text,
-                (screen.get_width() // 2 - 150, screen.get_height() // 3 + 175),
-            )
+        pygame.draw.rect(
+            screen.get_pygame_screen(), (255, 255, 255), rect_enter_code_to_join
+        )
+        pygame.draw.rect(screen.get_pygame_screen(), (255, 255, 255), rect_code)
+        screen.get_pygame_screen().blit(
+            text_enter_code,
+            (screen.get_width() // 2 - 150, screen.get_height() // 3 + 50, 300, 50),
+        )
+        screen.get_pygame_screen().blit(
+            code_text,
+            (screen.get_width() // 2 - 150, screen.get_height() // 3 + 100),
+        )
         pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -118,17 +120,21 @@ def menu_choose_game(screen, name):
                 if rect_join_world.collidepoint(x, y):
                     if code != "":
                         return join_game(name, screen, code)
-                    botton_join_clic = True
+                    else:
+                        messagebox.showinfo('code', 'il faut un code')
                 elif (
                     rect_enter_code_to_join.collidepoint(x, y)
                     or rect_code.collidepoint(x, y)
                     or rect_join_world.collidepoint(x, y)
-                ) and botton_join_clic == True:
-                    code = enter_text(
+                ):
+                    text = enter_text(
                         rect_code,
                         screen,
-                        (screen.get_width() // 2 - 150, screen.get_height() // 3 + 175),
+                        (screen.get_width() // 2 - 150, screen.get_height() // 3 + 100),
                     )
+                    code = text[0]
+                    if text[1] == True:
+                        return join_game(name,code)
 
 
 def show_first_menu(screen):
