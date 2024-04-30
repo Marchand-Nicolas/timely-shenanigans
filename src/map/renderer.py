@@ -46,16 +46,9 @@ def render(
 
         # On récupère les dimensions de l'écran
         screen_width, screen_height = screen.get_dimensions()
-        image = pygame.transform.scale(
-            image,
-            (
-                asset.get_width(),
-                (asset.get_width() * int(image.get_height())) / image.get_width(),
-            ),
-        )
 
         x_on_screen = x - coordinates.get_x() + screen_width // 2 - image_width // 2
-        y_on_screen = y - coordinates.get_y() + screen_height // 2 - image_height
+        y_on_screen = y - coordinates.get_y() + screen_height // 2
 
         # Placement des joueurs
         for i in range(len(players)):

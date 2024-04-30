@@ -9,8 +9,6 @@ class Asset:
         self.image_path = image_path
         self.image = image
         self.hitbox = hitbox
-        self.width = image.get_width()
-        self.height = image.get_height()
 
     def get_position(self):
         return self.coordinates
@@ -25,10 +23,10 @@ class Asset:
         return self.hitbox
 
     def get_width(self):
-        return self.width
+        return self.image.get_width()
 
     def get_height(self):
-        return self.height
+        return self.image.get_height()
 
     # Nico
     # Str method to print the asset
