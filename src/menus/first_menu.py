@@ -4,9 +4,11 @@ from tkinter import messagebox
 from src.menus.menu_choose_game import menu_choose_game
 from src.menus.undisplay import undisplay
 from src.menus.enter_text import enter_text
-
+from src.utils.game_loop import game_loop
+from src.utils.game_context import GameContext
 
 arial24 = pygame.font.SysFont("arial", 24)
+
 
 def show_first_menu(screen):
     name = ""
@@ -21,8 +23,8 @@ def show_first_menu(screen):
         screen.get_width() // 2 - 150, screen.get_height() // 2 + 150, 300, 50
     )
     text_enter_name = arial24.render("enter your name", True, pygame.Color(0, 0, 0))
-    running = True
-    while running:
+
+    def refresh():
         # dessine les objets du menu principale
         psedo_text = arial24.render(name, True, pygame.Color(0, 0, 0))
         pygame.draw.rect(screen.get_pygame_screen(), (255, 0, 0), play_buton)
@@ -41,36 +43,35 @@ def show_first_menu(screen):
             psedo_text, (screen.get_width() // 2 - 150, screen.get_height() // 2 + 150)
         )
         pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = pygame.mouse.get_pos()
-                if enter_name_rect.collidepoint(
-                    x, y
-                ) or text_enter_name_rect.collidepoint(
-                    x, y
-                ):  # detecte si la sourie est cliquer dans le rect d'entrer de nom
-                    text = enter_text(
-                        enter_name_rect,
-                        screen,
-                        (screen.get_width() // 2 - 150, screen.get_height() // 2 + 150),
+
+    def process_event(event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+            if enter_name_rect.collidepoint(x, y) or text_enter_name_rect.collidepoint(
+                x, y
+            ):  # detecte si la sourie est cliquer dans le rect d'entrer de nom
+                text = enter_text(
+                    enter_name_rect,
+                    screen,
+                    (screen.get_width() // 2 - 150, screen.get_height() // 2 + 150),
+                )
+                name = text[0]
+                if text[1] == True:
+                    undisplay(screen)
+                    return menu_choose_game(screen, name)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+            if play_buton.collidepoint(
+                x, y
+            ):  # detecte si la sourie est cliquer dans le rect de debut de jeu
+                if name == "enter your name" or name == "":
+                    messagebox.showinfo(
+                        "user name",
+                        "il faut entrer un nom d'utilisateur pour pouvoir jouer",
                     )
-                    name = text[0]
-                    if text[1] == True:
-                        undisplay(screen)
-                        return menu_choose_game(screen, name)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = pygame.mouse.get_pos()
-                if play_buton.collidepoint(
-                    x, y
-                ):  # detecte si la sourie est cliquer dans le rect de debut de jeu
-                    if name == "enter your name" or name == "":
-                        messagebox.showinfo(
-                            "user name",
-                            "il faut entrer un nom d'utilisateur pour pouvoir jouer",
-                        )
-                    else:
-                        undisplay(screen)
-                        menu_choose_game(screen, name)
-                        running = False
+                else:
+                    undisplay(screen)
+                    menu_choose_game(screen, name)
+
+    context = GameContext(refresh, process_event)
+    game_loop(screen=screen, context=context)

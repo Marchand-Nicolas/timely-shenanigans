@@ -174,14 +174,10 @@ def start_game(seed, screen, code=None, player_id=0):
             if event.key == pygame.K_DOWN:
                 down = False
 
-        # Mettre à jour les dimensions de l'écran si la fenêtre est redimensionnée
-        if event.type == pygame.VIDEORESIZE:
-            screen.set_dimensions(event.w, event.h)
-
     def on_exit():
         nonlocal stop_threads
         stop_threads = True
 
     context = GameContext(refresh, process_event, on_exit)
 
-    game_loop(context)
+    game_loop(screen=screen, context=context)

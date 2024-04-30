@@ -4,7 +4,7 @@ import pygame
 from src.utils.game_context import GameContext
 
 
-def game_loop(context=None):
+def game_loop(screen, context=None):
     if context is None:
         context = GameContext()
     run = True
@@ -18,6 +18,9 @@ def game_loop(context=None):
                     # On appelle la fonction on_exit si l'événement est de type QUIT
                     context.get_on_exit()()
                 run = False
+            # Mettre à jour les dimensions de l'écran si la fenêtre est redimensionnée
+            if event.type == pygame.VIDEORESIZE:
+                screen.set_dimensions(event.w, event.h)
 
         if context.get_tick_event():
             # On appelle la fonction tick_event à chaque tour de boucle
