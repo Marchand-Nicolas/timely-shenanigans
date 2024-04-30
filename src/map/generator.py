@@ -8,19 +8,22 @@ table_gener = [
         "nom": "src/assets/grass.png",
         "proba": 10,
         "src/assets/arbre.png": -5,
-        "src/assets/fleur.png": 5
+        "src/assets/fleur.png": 5,
+        "src/assets/grass.png": 0
     },
     {
         "nom": "src/assets/arbre.png",
         "proba": 5,
         "src/assets/grass.png": 5,
-        "src/assets/fleur.png": -5
+        "src/assets/fleur.png": -5,
+        "src/assets/arbre.png": 0
     },
     {
         "nom": "src/assets/fleur.png",
         "proba": 3,
         "src/assets/grass.png": -5,
-        "src/assets/arbre.png": 5
+        "src/assets/arbre.png": 5,
+        "src/assets/fleur.png": 0
     }
 ]
 
