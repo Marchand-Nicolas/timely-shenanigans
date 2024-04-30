@@ -1,29 +1,29 @@
 # crée par Elliot
-from math import cos, sin
+from math import cos, sin, sqrt
 from src.map.asset import Asset
 from src.map.coordinates import Coordinates
 
 table_gener = [
     {
         "nom": "src/assets/grass.png",
-        "proba": 10,
-        "src/assets/arbre.png": -5,
-        "src/assets/fleur.png": 5,
+        "proba": 90,
+        "src/assets/arbre.png": 5,
+        "src/assets/fleur.png": -5,
         "src/assets/grass.png": 0
     },
     {
         "nom": "src/assets/arbre.png",
-        "proba": 5,
-        "src/assets/grass.png": 5,
+        "proba": 98,
+        "src/assets/grass.png": 3,
         "src/assets/fleur.png": -5,
-        "src/assets/arbre.png": 0
+        "src/assets/arbre.png": 3
     },
     {
         "nom": "src/assets/fleur.png",
-        "proba": 3,
-        "src/assets/grass.png": -5,
-        "src/assets/arbre.png": 5,
-        "src/assets/fleur.png": 0
+        "proba": 97,
+        "src/assets/grass.png": 2,
+        "src/assets/arbre.png": -5,
+        "src/assets/fleur.png": -5
     }
 ]
 
@@ -61,14 +61,16 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
     ]
     for y in range(10, width, 10):
         for x in range(10, height, 10):
-            valeur = (
-                abs(sin(seed * x * y)) * 100
-            )  # on génère un nombre entre 0 et 100 dépendant de la seed et des coordonnées
+            if abs(sin(seed * x - y)) * 100 > 8:
+                continue
             for i in range(3):
+                valeur = (
+                    abs(cos(seed + (sin(x) + sqrt(y)) * 7 * (i + 1))) * 100
+                )  # on génère un nombre entre 0 et 100 dépendant de la seed et des coordonnées
                 modificateur = table_gener[i][assets[-1].get_image_path()]
                 image_path = image_paths[i]
                 image = loaded_images[image_path]
-                if valeur + modificateur >= 100 - table_gener[i]["proba"]:
+                if valeur + modificateur >= table_gener[i]["proba"]:
                     image_path = image_paths[i]
                     asset = Asset(Coordinates(x, y), image_path, None, image)
                     assets.append(asset)
