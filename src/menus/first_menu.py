@@ -5,7 +5,7 @@ from src.menus.menu_choose_game import menu_choose_game
 from src.menus.undisplay import undisplay
 from src.menus.enter_text import enter_text
 
-pygame.init()
+
 arial24 = pygame.font.SysFont("arial", 24)
 
 def show_first_menu(screen):

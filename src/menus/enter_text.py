@@ -27,12 +27,12 @@ def enter_text(text_rect, screen, coordinates):
                     event.key == 8 and text == ""
                 ):  # cas pour le backspac quand il n'y a pas de psedo
                     pass
+                elif event.key == 32:  # cas pour les espaces
+                    text += " "
                 elif(
                     (event.key > 122 or event.key < 97) and (event.key < 48 or event.key > 57)
                 ):
                     pass
-                elif event.key == 32:  # cas pour les espaces
-                    text += " "
                 else:
                     text += pygame.key.name(event.key)
             elif event.type == pygame.MOUSEBUTTONDOWN:
