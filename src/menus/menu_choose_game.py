@@ -80,4 +80,4 @@ def menu_choose_game(screen, name):
                     )
                     code = text[0]
                     if text[1] == True:
-                        return join_game(name,code)
+                        return join_game(name,screen,code)
