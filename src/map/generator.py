@@ -27,16 +27,6 @@ table_gener = [
     },
 ]
 
-"""table = [
-    {
-        "src/assets/grass.png": 15,
-        "src/assets/fleur.png": -9,
-        "src/assets/arbre.png": -9,
-    },
-    {"src/assets/grass.png": -9, "src/assets/arbre.png": 5, "src/assets/fleur.png": -9},
-    {, , "src/assets/grass.png": 0},
-]"""
-
 image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png"]
 
 
@@ -59,7 +49,7 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
         for x in range(10, height, 10):
             if abs(sin(seed * x * y)) * 100 > 8:
                 continue
-            for i in range(3):
+            for i in range(len(table_gener)):
                 valeur = (
                     abs(cos(seed + (sin(x) + sqrt(y)) * 7 * (i + 1))) * 100
                 )  # on génère un nombre entre 0 et 100 dépendant de la seed et des coordonnées
