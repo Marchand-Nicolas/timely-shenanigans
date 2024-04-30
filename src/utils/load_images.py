@@ -6,16 +6,15 @@ import pygame
 class Image(object):
     def __init__(self, path, width):
         self.path = path
-        self.image = pygame.image.load(path)
+        image = pygame.image.load(path)
+        self.width = width
         self.image = pygame.transform.scale(
-            self.image,
+            image,
             (
-                self.image.get_width(),
-                (self.image.get_width() * int(self.image.get_height()))
-                / self.image.get_width(),
+                width,
+                (width * int(image.get_height())) / image.get_width(),
             ),
         )
-        self.width = width
         self.height = self.image.get_height()
 
     def get_image_path(self):
