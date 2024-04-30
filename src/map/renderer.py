@@ -1,4 +1,4 @@
-# Nico
+# Nico, Elliot
 from src.map.world import *
 from src.map.coordinates import *
 from src.map.generator import *
