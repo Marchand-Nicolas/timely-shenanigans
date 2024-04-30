@@ -114,10 +114,10 @@ def menu_choose_game(screen, name):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 if rect_creat_world.collidepoint(x, y):
-                    create_game(name)
+                    create_game(name, screen)
                 if rect_join_world.collidepoint(x, y):
-                    if code != '':
-                        join_game(name,code)
+                    if code != "":
+                        join_game(name, screen, code)
                     botton_join_clic = True
                 elif (
                     rect_enter_code_to_join.collidepoint(x, y)

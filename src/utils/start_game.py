@@ -1,5 +1,4 @@
 import pygame
-from src.utils.create_screen import create_screen
 from src.map.generator import generate_map
 from src.map.renderer import render
 from src.utils.game_loop import game_loop
@@ -18,8 +17,7 @@ import time
 players_server = []
 
 
-def start_game(seed, code=None, player_id=0):
-    screen = create_screen()
+def start_game(seed, screen, code=None, player_id=0):
 
     loaded_images = load_images()
 
