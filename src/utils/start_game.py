@@ -181,8 +181,8 @@ def start_game(seed, screen, code=None, player_id=0):
                     id = player["id"]
                     if player["state"] == "mate":
                         if (
-                            abs(player_coordinates[0] - player["x"]) <= 10
-                            and abs(player_coordinates[1] - player["y"]) <= 10
+                            abs(player_coordinates.get_x() - player["x"]) <= 10
+                            and abs(player_coordinates.get_y() - player["y"]) <= 10
                         ):
                             kill_player(id, code)
             if event.key == pygame.K_LCTRL:
