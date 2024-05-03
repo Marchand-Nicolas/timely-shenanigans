@@ -15,7 +15,7 @@ def render(
     players: list,
     loaded_images: dict,
     game_state,
-    code: str = None
+    code: str = None,
 ):
     """
     Affiche le monde sur la fenêtre.
@@ -74,7 +74,12 @@ def render(
                     y_on_screen + image_height >= y_player_on_screen + joueur_height
                     or asset_index == asset_amount - 1
                 ):
-                    joueur = loaded_images["src/assets/player.png"].get_loaded_image()
+                    player_image_path = "src/assets/player.png"
+                    if player["state"] == "hunter":
+                        player_image_path = "src/assets/hunter.png"
+                    elif player["state"] == "dead":
+                        player_image_path = "src/assets/ghost.png"
+                    joueur = loaded_images[player_image_path].get_loaded_image()
                     username = arial24.render(
                         player["name"], True, pygame.Color(255, 255, 255)
                     )
