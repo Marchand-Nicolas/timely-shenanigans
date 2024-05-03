@@ -21,6 +21,9 @@ class Player:
     def setMate(self):
         self.state = "mate"
 
+    def kill(self):
+        self.state = "dead"
+
     def is_disconnected(self):
         return time.time() - self.last_update > 5
 

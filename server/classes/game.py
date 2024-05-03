@@ -25,6 +25,7 @@ class Game:
         self.state = "running"
         self.choose_new_hunter()
         self.start_time = time.time()
+        self.game
 
     def choose_new_hunter(self):
         hunter = random.choice(self.players)
@@ -32,6 +33,18 @@ class Game:
         for player in self.players:
             if player.id != hunter.id:
                 player.setMate()
+
+    def get_mates(self):
+        return [player for player in self.players if player.state == "mate"]
+
+    def kill_player(self, player_id):
+        for player in self.players:
+            if player.id == player_id:
+                player.kill()
+                break
+        mates = self.get_mates()
+        if len(mates) == 0:
+            self.state = "finished"
 
     def __str__(self):
         return f"Game {self.id} with {len(self.players)} players and code {self.code}"
