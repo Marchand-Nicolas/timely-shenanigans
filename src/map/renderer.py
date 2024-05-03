@@ -4,7 +4,6 @@ from src.map.generator import *
 from src.utils.get_visible_assets import *
 from src.utils.create_screen import *
 from src.utils.screen import *
-from src.utils.start_game import *
 import time
 
 
@@ -15,8 +14,8 @@ def render(
     screen: Screen,
     players: list,
     loaded_images: dict,
-    code: str = None,
-    game_state = game_state
+    game_state,
+    code: str = None
 ):
     """
     Affiche le monde sur la fenêtre.
@@ -32,8 +31,6 @@ def render(
     joueur_affiches = [False for _ in players]
     # On parcourt les assets visibles
     asset_amount = len(visible_assets)
-
-    last_game_state = "waiting"
 
     for asset_index in range(asset_amount):
         asset = visible_assets[asset_index]
@@ -108,9 +105,14 @@ def render(
             if game_state["state"] == "waiting":
                 wait_render = arial48.render("Waiting for more players ...", True, pygame.color(255, 0, 0))
                 pygame_screen.blit(wait_render, (screen_width // 2, screen_height // 2))
-            elif last_game_state == "running":
-                countdwon = get_game_duration() - time
-            last_game_state = game_state["state"]
+            elif game_state == "running":
+                countdown = 30 - time.time() + game_state["start_time"]
+                if countdown >= 0:
+                    pygame_screen.blit(arial48.render(str(round(countdown)), True, pygame.color(255, 0, 0), (screen_width // 2, screen_height // 2)))
+                elif countdown >= -3:
+                    pygame_screen.blit(arial48.render("START", True, pygame.color(255, 0, 0)))
+                else:
+                    
 
 
         # On affiche les coordonnées du joueur x / y (arrondies)

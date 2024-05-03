@@ -16,15 +16,15 @@ import time
 
 # Nico, Elliot
 
-game_state = {
-    "state": "waiting",
-    "start_time": time.time(),
-}
-
-players_server = []
-
 
 def start_game(seed, screen, code=None, player_id=0):
+
+    game_state = {
+    "state": "waiting",
+    "start_time": time.time(),
+    }
+
+    players_server = []
 
     loaded_images = load_images()
 
@@ -117,6 +117,7 @@ def start_game(seed, screen, code=None, player_id=0):
         nonlocal player_rotation
         nonlocal time_since_last_asset_refresh
         nonlocal visible_assets
+        nonlocal game_state
         current_time = time.time()
         delta = current_time - last_time
         distance = speed * delta
@@ -159,6 +160,7 @@ def start_game(seed, screen, code=None, player_id=0):
             screen,
             players_copy,
             loaded_images,
+            game_state,
             code,
         )
         last_time = current_time
