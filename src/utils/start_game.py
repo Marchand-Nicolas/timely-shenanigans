@@ -10,6 +10,7 @@ from src.multiplayer.server_loop import server_loop
 from src.utils.constants import world_width, world_height, speed
 from src.utils.load_images import load_images
 from src.utils.get_visible_assets import get_visible_assets
+from src.multiplayer.kill_player import kill_player
 import threading
 import time
 
@@ -164,6 +165,15 @@ def start_game(seed, screen, code=None, player_id=0):
                 up = True
             if event.key == pygame.K_DOWN:
                 down = True
+            if event.key == pygame.K_SPACE:
+                for player in players_server:
+                    id = player["id"]
+                    if player["state"] == "mate":
+                        if abs(player_coordinates[0] - player["x"]) <= 10 and abs(player_coordinates[1] - player["y"]) <= 10:
+                            kill_player(id, code)
+
+
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 left = False
