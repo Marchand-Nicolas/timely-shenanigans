@@ -4,6 +4,7 @@ from src.map.generator import *
 from src.utils.get_visible_assets import *
 from src.utils.create_screen import *
 from src.utils.screen import *
+from src.utils.get_game_duration import *
 import time
 
 
@@ -108,24 +109,23 @@ def render(
             pygame_screen.blit(code_render, (10, 10))
             if game_state["state"] == "waiting":
                 wait_render = arial48.render(
-                    "Waiting for more players ...", True, pygame.color(255, 0, 0)
+                    "Waiting for more players ...", True, pygame.Color(255, 0, 0)
                 )
                 pygame_screen.blit(wait_render, (screen_width // 2, screen_height // 2))
             elif game_state == "running":
                 countdown = 30 - time.time() + game_state["start_time"]
                 if countdown >= 0:
-                    pygame_screen.blit(
-                        arial48.render(
-                            str(round(countdown)),
-                            True,
-                            pygame.color(255, 0, 0),
-                            (screen_width // 2, screen_height // 2),
-                        )
-                    )
+                    pygame_screen.blit(arial48.render(str(round(countdown)), True, pygame.Color(255, 0, 0)), (screen_width // 2, screen_height // 2))
                 elif countdown >= -3:
-                    pygame_screen.blit(
-                        arial48.render("START", True, pygame.color(255, 0, 0))
-                    )
+                    pygame_screen.blit(arial48.render("START", True, pygame.Color(255, 0, 0)), (screen_width // 2, screen_height // 2))
+                else:
+                    remaining_players = 0
+                    for player in players:
+                        if player["state"] == "mate":
+                            remaining_players += 1
+                    pygame_screen.blit(arial48.render("il reste" + remaining_players + "joueurs", True, pygame.Color(255, 0, 0)), (screen_width - 10, 10))
+                    pygame_screen.blit(arial48.render(str(get_game_duration - game_state["start_time"]), True, pygame.Color(255, 0, 0)), (screen_width - 10, screen_height - 10))
+                    
 
         # On affiche les coordonnées du joueur x / y (arrondies)
         coordinates_render = arial12.render(
