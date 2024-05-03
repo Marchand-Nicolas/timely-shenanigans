@@ -11,6 +11,7 @@ from src.utils.constants import world_width, world_height, speed
 from src.utils.load_images import load_images
 from src.utils.get_visible_assets import get_visible_assets
 from src.multiplayer.kill_player import kill_player
+from src.multiplayer.restart_game import restart_game
 import threading
 import time
 
@@ -164,8 +165,10 @@ def start_game(seed, screen, code=None, player_id=0):
         last_time = current_time
         time_since_last_asset_refresh += delta
 
+    ctrl_pressed = False
+
     def process_event(event):
-        nonlocal right, left, up, down
+        nonlocal right, left, up, down, ctrl_pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 left = True
@@ -179,10 +182,13 @@ def start_game(seed, screen, code=None, player_id=0):
                 for player in players_server:
                     id = player["id"]
                     if player["state"] == "mate":
-                        if abs(player_coordinates[0] - player["x"]) <= 10 and abs(player_coordinates[1] - player["y"]) <= 10:
+                        if (
+                            abs(player_coordinates[0] - player["x"]) <= 10
+                            and abs(player_coordinates[1] - player["y"]) <= 10
+                        ):
                             kill_player(id, code)
-
-
+            if event.key == pygame.K_LCTRL:
+                ctrl_pressed = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
@@ -193,6 +199,11 @@ def start_game(seed, screen, code=None, player_id=0):
                 up = False
             if event.key == pygame.K_DOWN:
                 down = False
+            if event.key == pygame.K_LCTRL:
+                ctrl_pressed = False
+            # Le host peut appuyer
+            if player_id == 0 and event.key == pygame.K_r and ctrl_pressed:
+                restart_game(code)
 
     def on_exit():
         nonlocal stop_threads

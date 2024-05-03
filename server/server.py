@@ -5,6 +5,8 @@ import json
 from server.routes.create_game import handle_create_game
 from server.routes.join_game import handle_join_game
 from server.routes.get_game_state import handle_get_game_state
+from server.routes.kill_player import handle_kill_player
+from server.routes.restart_game import handle_restart_game
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -17,6 +19,8 @@ routes = {
     "create_game": handle_create_game,
     "join_game": handle_join_game,
     "get_game_state": handle_get_game_state,
+    "kill_player": handle_kill_player,
+    "restart_game": handle_restart_game,
 }
 
 # On stocke les parties en cours

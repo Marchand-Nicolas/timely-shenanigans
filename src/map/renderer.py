@@ -8,7 +8,6 @@ from src.utils.start_game import *
 import time
 
 
-
 def render(
     visible_assets,
     coordinates: Coordinates,
@@ -16,7 +15,7 @@ def render(
     players: list,
     loaded_images: dict,
     code: str = None,
-    game_state = game_state
+    game_state=game_state,
 ):
     """
     Affiche le monde sur la fenêtre.
@@ -106,12 +105,13 @@ def render(
             code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
             pygame_screen.blit(code_render, (10, 10))
             if game_state["state"] == "waiting":
-                wait_render = arial48.render("Waiting for more players ...", True, pygame.color(255, 0, 0))
+                wait_render = arial48.render(
+                    "Waiting for more players ...", True, pygame.color(255, 0, 0)
+                )
                 pygame_screen.blit(wait_render, (screen_width // 2, screen_height // 2))
             elif last_game_state == "running":
                 countdwon = get_game_duration() - time
             last_game_state = game_state["state"]
-
 
         # On affiche les coordonnées du joueur x / y (arrondies)
         coordinates_render = arial12.render(
