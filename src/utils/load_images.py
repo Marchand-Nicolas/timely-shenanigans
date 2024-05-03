@@ -39,4 +39,6 @@ def load_images():
         "src/assets/fleur.png": Image("src/assets/fleur.png", 24),
         "src/assets/arbre.png": Image("src/assets/arbre.png", 80),
         "src/assets/player.png": Image("src/assets/player.png", 70),
+        "src/assets/hunter.png": Image("src/assets/hunter.png", 70),
+        "src/assets/ghost.png": Image("src/assets/ghost.png", 70),
     }
