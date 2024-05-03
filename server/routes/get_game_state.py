@@ -1,6 +1,5 @@
 # Nico
 import json
-import time
 
 
 def handle_get_game_state(body, games):
@@ -33,5 +32,6 @@ def handle_get_game_state(body, games):
             "status": "ok",
             "players": [p.to_json() for p in player_list],
             "state": game.state,
+            "start_time": game.start_time,
         }
     )

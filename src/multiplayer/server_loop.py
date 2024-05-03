@@ -4,7 +4,7 @@ from src.multiplayer.call_server import call_server
 import time
 
 
-def server_loop(code, players, player_id, get_exit_app, player_coordinates):
+def server_loop(code, players, player_id, get_exit_app, player_coordinates, game_state):
     """
     Récupère les données de la partie, notamment la liste des joueurs avec leurs coordonnées
     actualisées.
@@ -24,6 +24,8 @@ def server_loop(code, players, player_id, get_exit_app, player_coordinates):
         players.clear()
         for player in response["players"]:
             players.append(player)
+        game_state["state"] = response["state"]
+        game_state["start_time"] = response["start_time"]
         time.sleep(0.1)
         if get_exit_app():
             break

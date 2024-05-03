@@ -8,11 +8,18 @@ class Player:
         self.x = 0
         self.y = 0
         self.last_update = time.time()
+        self.state = "mate"
 
     def update(self, x, y):
         self.x = x
         self.y = y
         self.last_update = time.time()
+
+    def setHunter(self):
+        self.state = "hunter"
+
+    def setMate(self):
+        self.state = "mate"
 
     def is_disconnected(self):
         return time.time() - self.last_update > 5
