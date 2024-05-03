@@ -4,6 +4,7 @@ from src.map.generator import *
 from src.utils.get_visible_assets import *
 from src.utils.create_screen import *
 from src.utils.screen import *
+from src.utils.get_game_duration import *
 import time
 
 
