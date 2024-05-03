@@ -32,4 +32,10 @@ class Player:
 
     # JSON serialization
     def to_json(self):
-        return {"name": self.name, "id": self.id, "x": self.x, "y": self.y}
+        return {
+            "name": self.name,
+            "id": self.id,
+            "x": self.x,
+            "y": self.y,
+            "state": self.state,
+        }
