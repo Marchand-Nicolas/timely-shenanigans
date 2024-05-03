@@ -20,17 +20,14 @@ def handle_get_game_state(body, games):
     # Mais on modifie le joueur qui a fait la requête pour lui donner sa position
     x = body["x"]
     y = body["y"]
-    player_list = []
     for player in players:
-        if player.id != player_id:
-            player_list.append(player)
-        else:
+        if player.id == player_id:
             player.update(x, y)
 
     return json.dumps(
         {
             "status": "ok",
-            "players": [p.to_json() for p in player_list],
+            "players": [p.to_json() for p in players],
             "state": game.state,
             "start_time": game.start_time,
         }

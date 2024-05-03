@@ -21,8 +21,8 @@ import time
 def start_game(seed, screen, code=None, player_id=0):
 
     game_state = {
-    "state": "waiting",
-    "start_time": time.time(),
+        "state": "waiting",
+        "start_time": time.time(),
     }
 
     players_server = []
@@ -138,15 +138,11 @@ def start_game(seed, screen, code=None, player_id=0):
 
         sync_players(distance)
         players_copy = players_client.copy()
-        players_copy.append(
-            {
-                "name": "",
-                "id": player_id,
-                "x": player_coordinates.get_x(),
-                "y": player_coordinates.get_y(),
-                "rotation": player_rotation,
-            }
-        )
+        for player in players_copy:
+            if player["id"] == player_id:
+                player["x"] = player_coordinates.get_x()
+                player["y"] = player_coordinates.get_y()
+                player["rotation"] = player_rotation
 
         # On récupère les assets visibles
         if time_since_last_asset_refresh > 0.3:
