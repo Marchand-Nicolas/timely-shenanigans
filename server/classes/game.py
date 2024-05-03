@@ -25,7 +25,6 @@ class Game:
         self.state = "running"
         self.choose_new_hunter()
         self.start_time = time.time()
-        self.game
 
     def choose_new_hunter(self):
         hunter = random.choice(self.players)
