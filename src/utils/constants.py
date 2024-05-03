@@ -5,3 +5,4 @@ server_port = 3011
 world_width = 4000
 world_height = 4000
 speed = 200
+game_duration_seconds = 60

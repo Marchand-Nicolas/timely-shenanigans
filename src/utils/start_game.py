@@ -16,6 +16,11 @@ import time
 
 # Nico, Elliot
 
+game_state = {
+    "state": "waiting",
+    "start_time": time.time(),
+}
+
 players_server = []
 
 
@@ -42,7 +47,12 @@ def start_game(seed, screen, code=None, player_id=0):
     if code:
         threading.Thread(
             target=lambda: server_loop(
-                code, players_server, player_id, get_exit_app, player_coordinates
+                code,
+                players_server,
+                player_id,
+                get_exit_app,
+                player_coordinates,
+                game_state,
             )
         ).start()
 
