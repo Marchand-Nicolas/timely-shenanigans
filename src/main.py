@@ -8,7 +8,7 @@ dans la console
 pour tester la génération et les déplacements sans multi:
 python -m src.test.world_generation
 
-Si le serveur n'est pas allumé, vous pouvez aller dans src/utiils/constants.py et mettre l'ip à localhost:port pour vous connecter au serveur local
+Vous pouvez aller dans src/utils/constants.py et mettre l'ip à localhost:port pour vous connecter au serveur local
 et pour le lancer : python -m server.server
 """
 
