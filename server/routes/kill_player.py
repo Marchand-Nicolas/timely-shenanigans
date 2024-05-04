@@ -16,3 +16,5 @@ def handle_kill_player(body, games):
     player_id = body["player_id"]
 
     game.kill_player(player_id)
+
+    return json.dumps({"status": "ok"})
