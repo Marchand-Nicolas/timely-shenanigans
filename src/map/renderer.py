@@ -107,7 +107,6 @@ def render(
         if code:
             code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
             pygame_screen.blit(code_render, (10, 10))
-            print(game_state)
             if game_state["state"] == "waiting":
                 wait_render = arial24.render(
                     "Waiting for more players ...", True, pygame.Color(255, 0, 0)
@@ -143,7 +142,7 @@ def render(
                     )
                     pygame_screen.blit(remaining_render, (screen_width - 10, 10))
                     time_remaining_render = arial48.render(
-                        str(get_game_duration() - game_state["start_time"]),
+                        str(get_game_duration(len(players)) - game_state["start_time"]),
                         True,
                         pygame.Color(255, 0, 0),
                     )
