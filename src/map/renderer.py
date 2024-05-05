@@ -108,58 +108,58 @@ def render(
         # On affiche l'image sur la fenêtre
         pygame_screen.blit(image, (x_on_screen, y_on_screen))
 
-        # On affiche le code s'il est présent
-        if code:
-            code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
-            pygame_screen.blit(code_render, (10, 10))
-            if game_state["state"] == "waiting":
-                wait_render = arial24.render(
-                    "Waiting for more players ...", True, pygame.Color(255, 0, 0)
+    # On affiche le code s'il est présent
+    if code:
+        code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
+        pygame_screen.blit(code_render, (10, 10))
+        if game_state["state"] == "waiting":
+            wait_render = arial24.render(
+                "Waiting for more players ...", True, pygame.Color(255, 0, 0)
+            )
+            pygame_screen.blit(wait_render, (10, screen_height - 30))
+        elif game_state["state"] == "running":
+            countdown = 30 - time.time() + game_state["start_time"]
+            if countdown >= 0:
+                count_render = arial48.render(
+                    str(round(countdown)), True, pygame.Color(255, 0, 0)
                 )
-                pygame_screen.blit(wait_render, (10, screen_height - 30))
-            elif game_state["state"] == "running":
-                countdown = 30 - time.time() + game_state["start_time"]
-                if countdown >= 0:
-                    count_render = arial48.render(
-                        str(round(countdown)), True, pygame.Color(255, 0, 0)
-                    )
-                    count_rect = count_render.get_rect(
-                        center=(screen_width // 2, screen_height // 2)
-                    )
-                    pygame_screen.blit(count_render, count_rect)
-                elif countdown >= -3:
-                    start_render = arial48.render(
-                        "START", True, pygame.Color(255, 0, 0)
-                    )
-                    start_rect = start_render.get_rect(
-                        center=(screen_width // 2, screen_height // 2)
-                    )
-                    pygame_screen.blit(start_render, start_rect)
-                else:
-                    remaining_players = 0
-                    for player in players:
-                        if player["state"] == "mate":
-                            remaining_players += 1
-                    remaining_render = arial24.render(
-                        "Joueurs restants: " + str(remaining_players),
-                        True,
-                        pygame.Color(255, 255, 255),
-                    )
-                    pygame_screen.blit(remaining_render, (screen_width - 220, 10))
-                    time_remaining = round(get_game_duration(len(players)) + game_state["start_time"] - time.time())
-                    time_remaining_render = arial48.render(
-                        str(time_remaining), True, pygame.Color(255, 0, 0))
-                    pygame_screen.blit(
-                        time_remaining_render, (screen_width - 200, screen_height - 200)
-                    )
+                count_rect = count_render.get_rect(
+                    center=(screen_width // 2, screen_height // 2)
+                )
+                pygame_screen.blit(count_render, count_rect)
+            elif countdown >= -3:
+                start_render = arial48.render(
+                    "START", True, pygame.Color(255, 0, 0)
+                )
+                start_rect = start_render.get_rect(
+                    center=(screen_width // 2, screen_height // 2)
+                )
+                pygame_screen.blit(start_render, start_rect)
+            else:
+                remaining_players = 0
+                for player in players:
+                    if player["state"] == "mate":
+                        remaining_players += 1
+                remaining_render = arial24.render(
+                    "Joueurs restants: " + str(remaining_players),
+                    True,
+                    pygame.Color(255, 255, 255),
+                )
+                pygame_screen.blit(remaining_render, (screen_width - 220, 10))
+                time_remaining = round(get_game_duration(len(players)) + game_state["start_time"] - time.time())
+                time_remaining_render = arial48.render(
+                    str(time_remaining), True, pygame.Color(255, 0, 0))
+                pygame_screen.blit(
+                    time_remaining_render, (screen_width - 200, screen_height - 200)
+                )
 
-        # On affiche les coordonnées du joueur x / y (arrondies)
-        coordinates_render = arial12.render(
-            f"{round(coordinates.get_x())} / {round(coordinates.get_y())}",
-            True,
-            pygame.Color(255, 255, 255),
-        )
-        pygame_screen.blit(coordinates_render, (10, 40))
+    # On affiche les coordonnées du joueur x / y (arrondies)
+    coordinates_render = arial12.render(
+        f"{round(coordinates.get_x())} / {round(coordinates.get_y())}",
+        True,
+        pygame.Color(255, 255, 255),
+    )
+    pygame_screen.blit(coordinates_render, (10, 40))
 
     # Actualiser l'affichage
     pygame.display.flip()
