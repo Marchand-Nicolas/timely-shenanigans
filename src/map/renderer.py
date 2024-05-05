@@ -147,10 +147,7 @@ def render(
                     )
                     pygame_screen.blit(remaining_render, (screen_width - 220, 10))
                     time_remaining_render = arial48.render(
-                        str(get_game_duration(len(players)) + game_state["start_time"] - time.time()),
-                        True,
-                        pygame.Color(255, 0, 0),
-                    )
+                        str(time_remaining), True, pygame.Color(255, 0, 0),) 
                     pygame_screen.blit(
                         time_remaining_render, (screen_width - 200, screen_height - 200)
                     )
