@@ -33,6 +33,9 @@ def render(
     # On parcourt les assets visibles
     asset_amount = len(visible_assets)
 
+    # On récupère les dimensions de l'écran
+    screen_width, screen_height = screen.get_dimensions()
+
     for asset_index in range(asset_amount):
         asset = visible_assets[asset_index]
         # On récupère la position de l'asset
@@ -45,9 +48,6 @@ def render(
         image_width, image_height = image_object.get_width(), image_object.get_height()
 
         image = image_object.get_loaded_image()
-
-        # On récupère les dimensions de l'écran
-        screen_width, screen_height = screen.get_dimensions()
 
         x_on_screen = x - coordinates.get_x() + screen_width // 2 - image_width // 2
         y_on_screen = y - coordinates.get_y() + screen_height // 2
@@ -128,9 +128,7 @@ def render(
                 )
                 pygame_screen.blit(count_render, count_rect)
             elif countdown >= -3:
-                start_render = arial48.render(
-                    "START", True, pygame.Color(255, 0, 0)
-                )
+                start_render = arial48.render("START", True, pygame.Color(255, 0, 0))
                 start_rect = start_render.get_rect(
                     center=(screen_width // 2, screen_height // 2)
                 )
@@ -146,9 +144,14 @@ def render(
                     pygame.Color(255, 255, 255),
                 )
                 pygame_screen.blit(remaining_render, (screen_width - 220, 10))
-                time_remaining = round(get_game_duration(len(players)) + game_state["start_time"] - time.time())
+                time_remaining = round(
+                    get_game_duration(len(players))
+                    + game_state["start_time"]
+                    - time.time()
+                )
                 time_remaining_render = arial48.render(
-                    str(time_remaining), True, pygame.Color(255, 0, 0))
+                    str(time_remaining), True, pygame.Color(255, 0, 0)
+                )
                 pygame_screen.blit(
                     time_remaining_render, (screen_width - 200, screen_height - 200)
                 )
