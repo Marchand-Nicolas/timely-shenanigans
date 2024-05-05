@@ -7,3 +7,4 @@ world_height = 2500
 speed = 200
 game_duration_seconds = 40
 hunter_speed_multiplier = 1.5
+ghost_speed_multiplier = 2

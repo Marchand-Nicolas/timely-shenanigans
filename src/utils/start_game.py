@@ -12,6 +12,7 @@ from src.utils.constants import (
     world_height,
     speed,
     hunter_speed_multiplier,
+    ghost_speed_multiplier,
 )
 from src.utils.load_images import load_images
 from src.utils.get_visible_assets import get_visible_assets
@@ -142,6 +143,8 @@ def start_game(seed, screen, code=None, player_id=0):
         distance = speed * delta
         if current_player["state"] == "hunter":
             distance *= hunter_speed_multiplier
+        if current_player["state"] == "ghost":
+            distance *= ghost_speed_multiplier
 
         if right:
             player_rotation = "right"
