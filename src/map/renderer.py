@@ -152,9 +152,7 @@ def render(
                 time_remaining_render = arial48.render(
                     str(time_remaining), True, pygame.Color(255, 0, 0)
                 )
-                pygame_screen.blit(
-                    time_remaining_render, (screen_width - 200, screen_height - 200)
-                )
+                pygame_screen.blit(time_remaining_render, (0, screen_height - 100))
 
     # On affiche les coordonnées du joueur x / y (arrondies)
     coordinates_render = arial12.render(

@@ -143,7 +143,7 @@ def start_game(seed, screen, code=None, player_id=0):
         distance = speed * delta
         if current_player["state"] == "hunter":
             distance *= hunter_speed_multiplier
-        if current_player["state"] == "ghost":
+        if current_player["state"] == "dead":
             distance *= ghost_speed_multiplier
 
         if right:
