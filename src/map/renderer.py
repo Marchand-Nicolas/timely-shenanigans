@@ -83,7 +83,7 @@ def render(
                     joueur = loaded_images[player_image_path].get_loaded_image()
                     if (
                         player["id"] == current_player["id"]
-                        or current_player["state"] == "mate"
+                        or current_player["state"] != "hunter"
                     ):
                         username = arial24.render(
                             player["name"], True, pygame.Color(255, 255, 255)
