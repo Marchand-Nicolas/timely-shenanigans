@@ -7,7 +7,12 @@ from src.map.coordinates import Coordinates
 from src.utils.game_context import GameContext
 from src.utils.game_loop import game_loop
 from src.multiplayer.server_loop import server_loop
-from src.utils.constants import world_width, world_height, speed
+from src.utils.constants import (
+    world_width,
+    world_height,
+    speed,
+    hunter_speed_multiplier,
+)
 from src.utils.load_images import load_images
 from src.utils.get_visible_assets import get_visible_assets
 from src.multiplayer.kill_player import kill_player
@@ -23,6 +28,14 @@ def start_game(seed, screen, code=None, player_id=0):
     game_state = {
         "state": "waiting",
         "start_time": time.time(),
+    }
+
+    current_player = {
+        "id": player_id,
+        "x": world_width // 2,
+        "y": world_height // 2,
+        "rotation": "right",
+        "state": "mate",
     }
 
     players_server = []
@@ -67,6 +80,11 @@ def start_game(seed, screen, code=None, player_id=0):
                 print("Loading player", player["id"])
                 player["rotation"] = "right"
                 players_client.append(player)
+            else:
+                for p in players_client:
+                    if p["id"] == player["id"]:
+                        p["state"] = player["state"]
+                        p["name"] = player["name"]
         # On supprime les joueurs qui ne sont plus dans la partie.
         for player in players_client:
             if player["id"] not in [p["id"] for p in players_server]:
@@ -83,13 +101,17 @@ def start_game(seed, screen, code=None, player_id=0):
                 continue
             x_distance = abs(client_player["x"] - server_player["x"])
             y_distance = abs(client_player["y"] - server_player["y"])
+            player_delta = (x_distance**2 + y_distance**2) ** 0.5
             x_movement = min(distance, x_distance)
             y_movement = min(distance, y_distance)
-            distance = (x_distance**2 + y_distance**2) ** 0.5
+            if client_player["state"] == "hunter":
+                x_movement *= hunter_speed_multiplier
+                y_movement *= hunter_speed_multiplier
+
             # Si la distance est plus grande que la distance parcourue en une seconde,
             # on accélère le mouvement en fonction de la distance.
-            if distance > speed:
-                multiplier = distance / speed
+            if player_delta > speed:
+                multiplier = player_delta / speed
                 if multiplier < 2:
                     x_movement *= 1.5
                     y_movement *= 1.5
@@ -114,27 +136,33 @@ def start_game(seed, screen, code=None, player_id=0):
     time_since_last_asset_refresh = 0
 
     def refresh():
-        nonlocal last_time
-        nonlocal player_rotation
-        nonlocal time_since_last_asset_refresh
-        nonlocal visible_assets
-        nonlocal game_state
+        nonlocal last_time, player_rotation, time_since_last_asset_refresh, visible_assets, game_state, current_player
         current_time = time.time()
         delta = current_time - last_time
         distance = speed * delta
+        if current_player["state"] == "hunter":
+            distance *= hunter_speed_multiplier
 
-        player_coordinates.x += (
-            distance if right and player_coordinates.x <= world_height else 0
-        )
         if right:
             player_rotation = "right"
         elif left:
             player_rotation = "left"
-        player_coordinates.x -= distance if left and player_coordinates.x >= 0 else 0
-        player_coordinates.y -= distance if up and player_coordinates.y >= 0 else 0
-        player_coordinates.y += (
-            distance if down and player_coordinates.y <= world_height else 0
-        )
+
+        if (
+            current_player["state"] != "hunter"
+            or game_state["state"] != "running"
+            or game_state["start_time"] + 30 < time.time()
+        ):
+            player_coordinates.x += (
+                distance if right and player_coordinates.x <= world_height else 0
+            )
+            player_coordinates.x -= (
+                distance if left and player_coordinates.x >= 0 else 0
+            )
+            player_coordinates.y -= distance if up and player_coordinates.y >= 0 else 0
+            player_coordinates.y += (
+                distance if down and player_coordinates.y <= world_height else 0
+            )
 
         sync_players(distance)
         players_copy = players_client.copy()
@@ -143,6 +171,7 @@ def start_game(seed, screen, code=None, player_id=0):
                 player["x"] = player_coordinates.get_x()
                 player["y"] = player_coordinates.get_y()
                 player["rotation"] = player_rotation
+                current_player = player
 
         # On récupère les assets visibles
         if time_since_last_asset_refresh > 0.3:
@@ -158,6 +187,7 @@ def start_game(seed, screen, code=None, player_id=0):
             players_copy,
             loaded_images,
             game_state,
+            current_player,
             code,
         )
         last_time = current_time
@@ -177,14 +207,15 @@ def start_game(seed, screen, code=None, player_id=0):
             if event.key == pygame.K_DOWN:
                 down = True
             if event.key == pygame.K_SPACE:
-                for player in players_server:
-                    id = player["id"]
-                    if player["state"] == "mate":
-                        if (
-                            abs(player_coordinates.get_x() - player["x"]) <= 10
-                            and abs(player_coordinates.get_y() - player["y"]) <= 10
-                        ):
-                            kill_player(id, code)
+                if current_player["state"] == "hunter":
+                    for player in players_server:
+                        id = player["id"]
+                        if player["state"] == "mate":
+                            if (
+                                abs(player_coordinates.get_x() - player["x"]) <= 100
+                                and abs(player_coordinates.get_y() - player["y"]) <= 100
+                            ):
+                                kill_player(id, code)
             if event.key == pygame.K_LCTRL:
                 ctrl_pressed = True
 
@@ -199,7 +230,7 @@ def start_game(seed, screen, code=None, player_id=0):
                 down = False
             if event.key == pygame.K_LCTRL:
                 ctrl_pressed = False
-            # Le host peut appuyer
+            # Le host peut appuyer sur R + CTRL pour redémarrer la partie.
             if player_id == 0 and event.key == pygame.K_r and ctrl_pressed:
                 restart_game(code)
 

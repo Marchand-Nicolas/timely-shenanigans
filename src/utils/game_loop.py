@@ -17,6 +17,7 @@ def game_loop(screen, context=None):
                 if context.get_on_exit():
                     # On appelle la fonction on_exit si l'événement est de type QUIT
                     context.get_on_exit()()
+                    exit()
                 run = False
             # Mettre à jour les dimensions de l'écran si la fenêtre est redimensionnée
             if event.type == pygame.VIDEORESIZE:

@@ -15,6 +15,7 @@ def render(
     players: list,
     loaded_images: dict,
     game_state,
+    current_player,
     code: str = None,
 ):
     """
@@ -80,19 +81,23 @@ def render(
                     elif player["state"] == "dead":
                         player_image_path = "src/assets/ghost.png"
                     joueur = loaded_images[player_image_path].get_loaded_image()
-                    username = arial24.render(
-                        player["name"], True, pygame.Color(255, 255, 255)
-                    )
-                    pygame_screen.blit(
-                        username,
-                        (
-                            x_player_on_screen + joueur_width // 2 - 50,
-                            y_player_on_screen - 50,
-                        ),
-                    )
-                    joueur = pygame.transform.scale(
-                        joueur, (joueur_width, joueur_height)
-                    )
+                    if (
+                        player["id"] == current_player["id"]
+                        or current_player["state"] == "mate"
+                    ):
+                        username = arial24.render(
+                            player["name"], True, pygame.Color(255, 255, 255)
+                        )
+                        pygame_screen.blit(
+                            username,
+                            (
+                                x_player_on_screen + joueur_width // 2 - 50,
+                                y_player_on_screen - 50,
+                            ),
+                        )
+                        joueur = pygame.transform.scale(
+                            joueur, (joueur_width, joueur_height)
+                        )
 
                     if player["rotation"] == "left":
                         joueur = pygame.transform.flip(joueur, True, False)
@@ -135,12 +140,12 @@ def render(
                     for player in players:
                         if player["state"] == "mate":
                             remaining_players += 1
-                    remaining_render = arial48.render(
-                        "il reste " + str(remaining_players) + " joueurs",
+                    remaining_render = arial24.render(
+                        "Joueurs restants: " + str(remaining_players),
                         True,
-                        pygame.Color(255, 0, 0),
+                        pygame.Color(255, 255, 255),
                     )
-                    pygame_screen.blit(remaining_render, (screen_width - 10, 10))
+                    pygame_screen.blit(remaining_render, (screen_width - 220, 10))
                     time_remaining_render = arial48.render(
                         str(get_game_duration(len(players)) - game_state["start_time"]),
                         True,

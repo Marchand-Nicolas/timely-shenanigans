@@ -19,6 +19,7 @@ def handle_join_game(body, games):
     game.players.append(player)
     if player_count == 1:
         game.state = "running"
+    game.start_game()
     return json.dumps(
         {
             "status": "ok",
