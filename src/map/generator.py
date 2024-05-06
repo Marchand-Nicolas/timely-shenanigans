@@ -96,6 +96,3 @@ def generate_map(seed: int, width: int, height: int, loaded_images: dict):
         key=lambda asset: asset.get_position().get_y() + asset.get_height(),
     )  # Nico
     return assets
-
-
-generate_map
