@@ -43,4 +43,5 @@ while True:
         for player in players:
             if player.is_disconnected():
                 game.remove_player(player.id)
-    # On relance les parties dont le délai est dépassé
+        # On relance les parties dont le délai est dépassé
+        game.restart_if_ended()
