@@ -28,7 +28,7 @@ class Game:
         self.start_time = time.time()
 
     def restart_if_ended(self):
-        if self.start_time + get_game_duration() < time.time():
+        if self.start_time + get_game_duration(self.get_player_count()) < time.time():
             self.start_game()
 
     def choose_new_hunter(self):
