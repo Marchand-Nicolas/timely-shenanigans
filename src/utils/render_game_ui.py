@@ -14,6 +14,7 @@ def render_game_ui(
 ):
     arial48 = pygame.font.SysFont("arial", 48)
     arial24 = pygame.font.SysFont("arial", 24)
+    arial12 = pygame.font.SysFont("arial", 12)
     if code:
         code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
         pygame_screen.blit(code_render, (10, 10))
@@ -66,28 +67,61 @@ def render_game_ui(
             pygame_screen.blit(end_render, end_rect)
             # Si le joueur est mate, on affiche un message
             if current_player["state"] == "mate":
-
                 end_message = arial24.render(
-                    "You survived! Well done " + current_player.name,
+                    "You survived! Well done " + current_player["name"],
                     True,
                     pygame.Color(255, 255, 255),
                 )
                 pygame_screen.blit(end_message, (10, 10))
-            if current_player["state"] == "hunter":
-                # On regarde s'il reste des mates
-                remaining_players = 0
-                for player in players:
-                    if player["state"] == "mate":
-                        remaining_players += 1
+                end_submessage = arial12.render(
+                    "The mates won against the hunter",
+                    True,
+                    pygame.Color(255, 255, 255),
+                )
+                pygame_screen.blit(end_submessage, (10, 40))
+            # On regarde s'il reste des mates
+            remaining_players = 0
+            for player in players:
+                if player["state"] == "mate":
+                    remaining_players += 1
+            if current_player["state"] == "dead":
                 if remaining_players == 0:
                     end_message = arial24.render(
-                        "You won! Well done" + current_player.name,
+                        "You lost!", True, pygame.Color(255, 255, 255)
+                    )
+                    pygame_screen.blit(end_message, (10, 10))
+                    end_submessage = arial12.render(
+                        "The hunter killed all the mates",
+                        True,
+                        pygame.Color(255, 255, 255),
+                    )
+                    pygame_screen.blit(end_submessage, (10, 40))
+                else:
+                    end_message = arial24.render(
+                        "The hunter killed you...", True, pygame.Color(255, 255, 255)
+                    )
+                    pygame_screen.blit(end_message, (10, 10))
+                    end_submessage = arial12.render(
+                        "But you won thanks to your mates!",
+                    )
+                    pygame_screen.blit(end_submessage, (10, 40))
+            elif current_player["state"] == "hunter":
+                if remaining_players == 0:
+                    end_message = arial24.render(
+                        "You won! Well done" + current_player["name"],
                         True,
                         pygame.Color(255, 255, 255),
                     )
                     pygame_screen.blit(end_message, (10, 10))
+                    end_submessage = arial12.render(
+                        "You killed all the mates", True, pygame.Color(255, 255, 255)
+                    )
+                    pygame_screen.blit(end_submessage, (10, 40))
                 else:
                     end_message = arial24.render(
                         "You lost!", True, pygame.Color(255, 255, 255)
                     )
                     pygame_screen.blit(end_message, (10, 10))
+                    end_submessage = arial12.render(
+                        "The mates won against you", True, pygame.Color(255, 255, 255)
+                    )
