@@ -60,5 +60,5 @@ def load_images(screen: Screen):
         "src/assets/vision.png": Image(
             "src/assets/vision.png", screen.get_width(), screen.get_height()
         ),
-        "src/assets/cottage.png": Image("src/assets/cottage.png", 80)
+        "src/assets/cottage.png": Image("src/assets/cottage.png", 90)
     }
