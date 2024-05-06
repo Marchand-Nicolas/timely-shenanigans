@@ -30,11 +30,11 @@ table_gener = [
     },
     {
        "nom": "src/assets/cottage.png",
-       "proba": 99,
-       "src/assets/grass.png": 0,
-        "src/assets/arbre.png": -2,
+       "proba": 99.5,
+       "src/assets/grass.png": -1,
+        "src/assets/arbre.png": -1,
         "src/assets/fleur.png": 0,
-        "src/assets/cottage.png": -2  
+        "src/assets/cottage.png": -1  
     }
 ]
 
