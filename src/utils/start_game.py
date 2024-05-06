@@ -26,7 +26,7 @@ import time
 
 def start_game(seed, screen, code=None, player_id=0):
 
-    game_state = {
+    game = {
         "state": "waiting",
         "start_time": time.time(),
     }
@@ -67,7 +67,7 @@ def start_game(seed, screen, code=None, player_id=0):
                 player_id,
                 get_exit_app,
                 player_coordinates,
-                game_state,
+                game,
             )
         ).start()
 
@@ -137,10 +137,12 @@ def start_game(seed, screen, code=None, player_id=0):
     time_since_last_asset_refresh = 0
 
     def refresh():
-        nonlocal last_time, player_rotation, time_since_last_asset_refresh, visible_assets, game_state, current_player
+        nonlocal last_time, player_rotation, time_since_last_asset_refresh, visible_assets, game, current_player
         current_time = time.time()
         delta = current_time - last_time
         distance = speed * delta
+        # On arrondie la distance à 5 chiffres après la virgule.
+        distance = round(distance, 5)
         if current_player["state"] == "hunter":
             distance *= hunter_speed_multiplier
         if current_player["state"] == "dead":
@@ -153,8 +155,8 @@ def start_game(seed, screen, code=None, player_id=0):
 
         if (
             current_player["state"] != "hunter"
-            or game_state["state"] != "running"
-            or game_state["start_time"] + 30 < time.time()
+            or game["state"] != "running"
+            or game["start_time"] + 30 < time.time()
         ):
             player_coordinates.x += (
                 distance if right and player_coordinates.x <= world_height else 0
@@ -189,7 +191,7 @@ def start_game(seed, screen, code=None, player_id=0):
             screen,
             players_copy,
             loaded_images,
-            game_state,
+            game,
             current_player,
             code,
         )
@@ -210,7 +212,7 @@ def start_game(seed, screen, code=None, player_id=0):
             if event.key == pygame.K_DOWN:
                 down = True
             if event.key == pygame.K_SPACE:
-                if current_player["state"] == "hunter":
+                if current_player["state"] == "hunter" and game["state"] == "running":
                     for player in players_server:
                         id = player["id"]
                         if player["state"] == "mate":

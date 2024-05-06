@@ -14,7 +14,7 @@ def render(
     screen: Screen,
     players: list,
     loaded_images: dict,
-    game_state,
+    game,
     current_player,
     code: str = None,
 ):
@@ -87,13 +87,13 @@ def render(
                         username = arial24.render(
                             player["name"], True, pygame.Color(255, 255, 255)
                         )
-                        pygame_screen.blit(
-                            username,
-                            (
-                                x_player_on_screen + joueur.get_width() // 2 - 50,
-                                y_player_on_screen - 50,
-                            ),
+                        username_rect = username.get_rect(
+                            center=(
+                                x_player_on_screen + joueur.get_width() // 2,
+                                y_player_on_screen - joueur.get_height() // 2,
+                            )
                         )
+                        pygame_screen.blit(username, username_rect)
                         joueur = pygame.transform.scale(
                             joueur, (joueur.get_width(), joueur.get_height())
                         )
@@ -107,18 +107,16 @@ def render(
         # On affiche l'image sur la fenêtre
         pygame_screen.blit(image, (x_on_screen, y_on_screen))
 
-    if current_player["state"] == "hunter" and game_state["state"] == "running":
+    if current_player["state"] == "hunter" and game["state"] == "running":
         vision = loaded_images["src/assets/vision.png"].get_loaded_image()
         pygame_screen.blit(vision, (0, 0))
 
     render_game_ui(
         code,
-        game_state,
+        game,
         players,
         current_player,
-        screen_width,
-        screen_height,
-        pygame_screen,
+        screen,
     )
     # On affiche les coordonnées du joueur x / y (arrondies)
     coordinates_render = arial12.render(

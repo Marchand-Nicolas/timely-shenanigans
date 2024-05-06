@@ -2,7 +2,7 @@
 import json
 
 
-def handle_get_game_state(body, games):
+def handle_get_game(body, games):
     # On cherche la partie correspondant au code
     game = None
     for g in games:

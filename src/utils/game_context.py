@@ -1,3 +1,6 @@
+# Nico
+
+
 class GameContext:
     def __init__(self, tick_event=None, on_event=None, on_exit=None):
         self.tick_event = tick_event

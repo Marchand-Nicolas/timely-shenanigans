@@ -24,12 +24,18 @@ class Game:
         self.players = [player for player in self.players if player.id != player_id]
 
     def start_game(self):
+        # Check there is at least 2 players
+        if len(self.players) < 2:
+            return
         self.state = "running"
         self.choose_new_hunter()
         self.start_time = time.time()
 
     def restart_if_ended(self):
-        if self.start_time + get_game_duration(self.get_player_count()) < time.time():
+        if (
+            self.start_time + get_game_duration(self.get_player_count()) < time.time()
+            and self.state == "running"
+        ):
             self.end_game()
 
     def choose_new_hunter(self):
