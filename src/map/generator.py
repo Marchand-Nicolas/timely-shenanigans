@@ -10,6 +10,7 @@ table_gener = [
         "src/assets/arbre.png": 5,
         "src/assets/fleur.png": -5,
         "src/assets/grass.png": 0,
+        "src/assets/cottage.png": 0
     },
     {
         "nom": "src/assets/arbre.png",
@@ -17,6 +18,7 @@ table_gener = [
         "src/assets/grass.png": 3,
         "src/assets/fleur.png": -5,
         "src/assets/arbre.png": 3,
+        "src/assets/cottage.png": -3
     },
     {
         "nom": "src/assets/fleur.png",
@@ -24,10 +26,19 @@ table_gener = [
         "src/assets/grass.png": 2,
         "src/assets/arbre.png": -5,
         "src/assets/fleur.png": -5,
+        "src/assets/cottage.png": 0
     },
+    {
+       "nom": "src/assets/cottage.png",
+       "proba": 99,
+       "src/assets/grass.png": 0,
+        "src/assets/arbre.png": -2,
+        "src/assets/fleur.png": 0,
+        "src/assets/cottage.png": -2  
+    }
 ]
 
-image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png"]
+image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png", "src/assets/cottage.png"]
 
 
 def generate_map(seed: int, width: int, height: int, loaded_images: dict):
