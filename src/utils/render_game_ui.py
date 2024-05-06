@@ -110,7 +110,7 @@ def render_game_ui(
             elif current_player["state"] == "hunter":
                 if remaining_players == 0:
                     end_message = arial24.render(
-                        "You won! Well done" + current_player["name"],
+                        "You won! Well done " + current_player["name"],
                         True,
                         pygame.Color(255, 255, 255),
                     )
