@@ -65,7 +65,7 @@ def render_game_ui(
                 center=(screen_width // 2, screen_height // 2)
             )
             pygame_screen.blit(end_render, end_rect)
-            # Si le joueur est mate, on affiche un message
+            """# Si le joueur est mate, on affiche un message
             if current_player["state"] == "mate":
                 end_message = arial24.render(
                     "You survived! Well done " + current_player["name"],
@@ -126,4 +126,4 @@ def render_game_ui(
                     pygame_screen.blit(end_message, (10, 10))
                     end_submessage = arial12.render(
                         "The mates won against you", True, pygame.Color(255, 255, 255)
-                    )
+                    )"""
