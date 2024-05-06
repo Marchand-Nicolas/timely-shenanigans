@@ -16,7 +16,7 @@ def handle_get_game(body, games):
 
     players = game.get_players()
 
-    # On renvoie la liste des joueurs, sans le joueur qui a fait la requête
+    # On renvoie la liste des joueurs
     # Mais on modifie le joueur qui a fait la requête pour lui donner sa position
     x = body["x"]
     y = body["y"]
