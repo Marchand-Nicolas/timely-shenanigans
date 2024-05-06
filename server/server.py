@@ -7,6 +7,8 @@ from server.routes.join_game import handle_join_game
 from server.routes.get_game_state import handle_get_game_state
 from server.routes.kill_player import handle_kill_player
 from server.routes.restart_game import handle_restart_game
+from server.utils.constants import end_time_duration_seconds
+import time
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -43,5 +45,11 @@ while True:
         for player in players:
             if player.is_disconnected():
                 game.remove_player(player.id)
-        # On relance les parties dont le délai est dépassé
+        # On termine les parties dont le délai est dépassé
         game.restart_if_ended()
+        # On relance les parties terminées depuis end_time_duration_seconds
+        if (
+            game.state == "finished"
+            and time.time() - game.end_time > end_time_duration_seconds
+        ):
+            game.start_game()
