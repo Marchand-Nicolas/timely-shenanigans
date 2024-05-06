@@ -57,30 +57,29 @@ def render(
             joueur_affiche = joueur_affiches[i]
             player = players[i]
             if not joueur_affiche:
-                joueur_width = 70
-                joueur_height = 70
+                player_image_path = "src/assets/player.png"
+                if player["state"] == "hunter":
+                    player_image_path = "src/assets/hunter.png"
+                elif player["state"] == "dead":
+                    player_image_path = "src/assets/ghost.png"
+                joueur = loaded_images[player_image_path].get_loaded_image()
                 x_player_on_screen = (
                     player["x"]
                     - coordinates.get_x()
                     + screen_width // 2
-                    - joueur_width // 2
+                    - joueur.get_width() // 2
                 )
                 y_player_on_screen = (
                     player["y"]
                     - coordinates.get_y()
                     + screen_height // 2
-                    - joueur_height
+                    - joueur.get_height()
                 )
                 if (
-                    y_on_screen + image_height >= y_player_on_screen + joueur_height
+                    y_on_screen + image_height
+                    >= y_player_on_screen + joueur.get_height()
                     or asset_index == asset_amount - 1
                 ):
-                    player_image_path = "src/assets/player.png"
-                    if player["state"] == "hunter":
-                        player_image_path = "src/assets/hunter.png"
-                    elif player["state"] == "dead":
-                        player_image_path = "src/assets/ghost.png"
-                    joueur = loaded_images[player_image_path].get_loaded_image()
                     if (
                         player["id"] == current_player["id"]
                         or current_player["state"] != "hunter"
@@ -92,12 +91,12 @@ def render(
                         pygame_screen.blit(
                             username,
                             (
-                                x_player_on_screen + joueur_width // 2 - 50,
+                                x_player_on_screen + joueur.get_width() // 2 - 50,
                                 y_player_on_screen - 50,
                             ),
                         )
                         joueur = pygame.transform.scale(
-                            joueur, (joueur_width, joueur_height)
+                            joueur, (joueur.get_width(), joueur.get_height())
                         )
 
                     if player["rotation"] == "left":
