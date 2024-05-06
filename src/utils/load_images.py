@@ -54,7 +54,7 @@ def load_images(screen: Screen):
         "src/assets/grass.png": Image("src/assets/grass.png", 50),
         "src/assets/fleur.png": Image("src/assets/fleur.png", 24),
         "src/assets/arbre.png": Image("src/assets/arbre.png", 80),
-        "src/assets/player.png": Image("src/assets/player.png", 75),
+        "src/assets/player.png": Image("src/assets/player.png", 70),
         "src/assets/hunter.png": Image("src/assets/hunter.png", 95),
         "src/assets/ghost.png": Image("src/assets/ghost.png", 40),
         "src/assets/vision.png": Image(

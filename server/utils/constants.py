@@ -1,1 +1,1 @@
-game_duration_seconds = 30
+game_duration_seconds = 20
