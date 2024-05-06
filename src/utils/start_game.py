@@ -120,7 +120,7 @@ def start_game(seed, screen, code=None, player_id=0):
                     # On téléporte le joueur si la distance est trop grande.
                     client_player["x"] = server_player["x"]
                     client_player["y"] = server_player["y"]
-            if client_player["x"] != server_player["x"]:
+            if abs(client_player["x"] - server_player["x"]) > 1:
                 client_player["rotation"] = (
                     "right" if client_player["x"] < server_player["x"] else "left"
                 )
@@ -141,8 +141,6 @@ def start_game(seed, screen, code=None, player_id=0):
         current_time = time.time()
         delta = current_time - last_time
         distance = speed * delta
-        # On arrondie la distance à 5 chiffres après la virgule.
-        distance = round(distance, 5)
         if current_player["state"] == "hunter":
             distance *= hunter_speed_multiplier
         if current_player["state"] == "dead":
