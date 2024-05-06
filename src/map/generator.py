@@ -38,7 +38,7 @@ table_gener = [
     }
 ]
 
-image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png"]
+image_paths = ["src/assets/grass.png", "src/assets/arbre.png", "src/assets/fleur.png", "src/assets/cottage.png"]
 
 
 def generate_map(seed: int, width: int, height: int, loaded_images: dict):
