@@ -12,6 +12,7 @@ class Game:
         self.seed = seed
         self.state = "waiting"
         self.start_time = time.time()
+        self.end_time = None
 
     def get_player_count(self):
         return len(self.players)
@@ -29,7 +30,7 @@ class Game:
 
     def restart_if_ended(self):
         if self.start_time + get_game_duration(self.get_player_count()) < time.time():
-            self.start_game()
+            self.end_game()
 
     def choose_new_hunter(self):
         hunter = random.choice(self.players)
@@ -48,7 +49,11 @@ class Game:
                 break
         mates = self.get_mates()
         if len(mates) == 0:
-            self.state = "finished"
+            self.end_game()
+
+    def end_game(self):
+        self.state = "finished"
+        self.end_time = time.time()
 
     def __str__(self):
         return f"Game {self.id} with {len(self.players)} players and code {self.code}"
