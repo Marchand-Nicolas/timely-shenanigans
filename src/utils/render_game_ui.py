@@ -103,6 +103,8 @@ def render_game_ui(
                     pygame_screen.blit(end_message, (10, 10))
                     end_submessage = arial12.render(
                         "But you won thanks to your mates!",
+                        True,
+                        pygame.Color(255, 255, 255),
                     )
                     pygame_screen.blit(end_submessage, (10, 40))
             elif current_player["state"] == "hunter":
