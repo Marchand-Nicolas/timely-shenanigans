@@ -41,7 +41,7 @@ def start_game(seed, screen, code=None, player_id=0):
 
     players_server = []
 
-    loaded_images = load_images()
+    loaded_images = load_images(screen)
 
     generated_assets = generate_map(seed, world_width, world_height, loaded_images)
 
@@ -236,6 +236,10 @@ def start_game(seed, screen, code=None, player_id=0):
             # Le host peut appuyer sur R + CTRL pour redémarrer la partie.
             if player_id == 0 and event.key == pygame.K_r and ctrl_pressed:
                 restart_game(code)
+
+        # Si l'écran est redimmensionné, on redimmensionne vision.png
+        if event.type == pygame.VIDEORESIZE:
+            loaded_images["src/assets/vision.png"].set_dimensions(event.w, event.h)
 
     def on_exit():
         nonlocal stop_threads

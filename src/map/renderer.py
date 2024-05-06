@@ -109,6 +109,10 @@ def render(
         # On affiche l'image sur la fenêtre
         pygame_screen.blit(image, (x_on_screen, y_on_screen))
 
+    if current_player["state"] == "hunter" and game_state["state"] == "running":
+        vision = loaded_images["src/assets/vision.png"].get_loaded_image()
+        pygame_screen.blit(vision, (0, 0))
+
     # On affiche le code s'il est présent
     if code:
         code_render = arial24.render(code, True, pygame.Color(255, 255, 255))
