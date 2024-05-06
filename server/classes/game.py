@@ -1,5 +1,6 @@
 import random
 import time
+from server.utils.get_game_duration import get_game_duration
 
 
 class Game:
@@ -25,6 +26,10 @@ class Game:
         self.state = "running"
         self.choose_new_hunter()
         self.start_time = time.time()
+
+    def restart_if_ended(self):
+        if self.start_time + get_game_duration() < time.time():
+            self.start_game()
 
     def choose_new_hunter(self):
         hunter = random.choice(self.players)
